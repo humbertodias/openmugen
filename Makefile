@@ -1,15 +1,16 @@
-OS   := $(shell uname -s)
-ARCH := $(shell uname -m)
+OS    := $(shell uname -s)
+ARCH  := $(shell uname -m)
+CMAKE := $(shell which cmake)
+
 # if there is no current tag use the git commit hash
 TAG_NAME := $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
-
 
 .PHONY: build
 BUILD_TYPE=Debug
 BUILD_TYPE=Release
 build:
-	cmake -Bbuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-	cmake --build build -v
+	$(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+	$(CMAKE) --build build -v
 
 run:
 	./build/OpenMugen
