@@ -1,0 +1,60 @@
+name: CD
+
+on:
+  release:
+    types: [ created ]
+
+defaults:
+  run:
+    shell: bash
+
+# required for upload
+permissions:
+  contents: write
+
+jobs:
+
+  Linux:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ ubuntu-24.04, ubuntu-24.04-arm ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev libsdl1.2-compat-dev build-essential cmake make
+
+      - name: Build tar.gz
+        run: make clean targz/data build targz/openmugen
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            *.tar.gz
+            data.zip
+
+  MacOS:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ macos-latest, macos-13 ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install
+        run: brew install sdl2 sdl2_image sdl2_gfx sdl12-compat cmake make
+
+      - name: Build tar.gz
+        run: make clean targz/data build targz/openmugen
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            *.tar.gz            
