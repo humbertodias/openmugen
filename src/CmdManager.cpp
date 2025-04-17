@@ -199,48 +199,46 @@ void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
 
     PLCOMMAND* currCommand = m_Commands;
 
+    // Iterate through all commands
     for (int a = 0; a < m_CommandCount; a++)
     {
         int nTime = -1, nLastTime = -1;
         int currKeyIndex = 0;
 
-        // ʹ������command = ~D, DF, F, x����
-        // �����x�ж������£�����Ҫ��һ�£�����¼����ʱ�䣬Ȼ��currKeyIndex++����buffer�ж���ǰ�ƽ�
-        // F��DF��һ�µ�ʱ����ǰ�ߣ�ֱ��~Dһ�£���¼��һʱ�䣬�ж��Ƿ񳬳���
-        for (int b = currCommand->nHowManyCommand - 1; b >= 0;
-             b--)  // һ������ж��Ƿ�ƥ�����а���
+        // Example command = ~D, DF, F, x
+        // Initially judge from x, press, and if it is consistent with the requirement, record the last time, then currKeyIndex++, move the buffer forward
+        // When F and DF are consistent, move forward until ~D is consistent, record the first time, and judge whether it exceeds.
+        for (int b = currCommand->nHowManyCommand - 1; b >= 0; b--)  // A command to determine whether it matches all keys
         {
             bool bCommand  = false;
-            bool onRelease = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_ON_RELEASE) != 0);    // �����Ƿ���Ҫ�ſ�
-            bool onHold    = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_MUST_BE_HELD) != 0);  // �Ƿ�Ҫ��ס
-            bool use4Way   = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY) != 0);  // �Ƿ����ĸ�����
-            bool banOtherInput = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT) != 0);
-            // �Ƿ��ֹ��������������
-            int gameTicksToHold = currCommand->nCommand[b].gameTicksForHold;  // �������µ�ʱ��
-            int keyCode         = currCommand->nCommand[b].keyCode;           // ����ת��
+            bool onRelease = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_ON_RELEASE) != 0);    //Whether the button needs to be released
+            bool onHold    = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_MUST_BE_HELD) != 0);  // Whether to require pressing
+            bool use4Way   = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY) != 0);  // Is it four directions?
+            bool banOtherInput = ((currCommand->nCommand[b].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT) != 0); // Whether to prohibit other buttons from being pressed
+            int gameTicksToHold = currCommand->nCommand[b].gameTicksForHold;  // Key pressed time
+            int keyCode         = currCommand->nCommand[b].keyCode;           //Key transcoding
 
-            for (; currKeyIndex < m_KeyBufferSize; currKeyIndex++)  // ÿ����������buff������������
+            for (; currKeyIndex < m_KeyBufferSize; currKeyIndex++)  // Each key processes all buffs! ! ! !
             {
-                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[AdjustKeyIndex(m_KeyIndex, -currKeyIndex)];
-                // �ӵ�ǰ�������ֵ����ǰ����
+                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[AdjustKeyIndex(m_KeyIndex, -currKeyIndex)]; // Traverse forward from the current input key value
                 bool keyDown = ((frameInput->keyBitfield & keyCode) == keyCode);
-                if (keyDown && !use4Way)  // ��Ҫ�������£������ĸ�����
+                if (keyDown && !use4Way)  // Need to press the button, not four directions
                 {
                     int keyCodeDirs    = (keyCode & PLC_ALL_DIRECTIONS_BITFIELD);
                     int frameInputDirs = (frameInput->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD);
                     keyDown            = !keyCodeDirs || (keyCodeDirs == frameInputDirs);
-                    // ���µİ�ť�Ƿ��Ƿ����������Ҫ������һ�£����ǣ�����ȷ�������ж�
+                    //Whether the button pressed is a direction key, if it is, it must be consistent with the requirements, if not, it is correct, continue to judge
                 }
 
                 bool buttonConditionsMet = false;
 
                 // see how long it's been held
-                if (onRelease != keyDown)  // �����ɿ���������һ��ʱ��ʱ��(keyDown&&!onRelease��
+                if (onRelease != keyDown) // Release the key and keep it pressed for a certain period of time (keyDown&&!onRelease)
                 {
                     int gameTicksHeld = 0;
                     for (int k = currKeyIndex + 1; k < m_KeyBufferSize; k++) {
                         PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[AdjustKeyIndex(m_KeyIndex, -k)];
-                        // �ӵ�ǰ�������ֵ����ǰ����
+                        // Button pressed, not in four directions
                         bool keyDown2 = ((frameInput2->keyBitfield & keyCode) == keyCode);
                         if (keyDown2 && !use4Way)  // �������£������ĸ�����
                         {
@@ -268,9 +266,9 @@ void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
                         }
                     }
                 }
-                // ������������ˣ��ͼ�¼��ʼ����ʱ�䣬������һ��������
+                // If a single key passes the level, record the start and end time and continue with the next key.
                 if (buttonConditionsMet) {
-                    // if its the first element store the time of it
+                    // if it's the first element store the time of it
                     if (b == 0) {
                         nTime = frameInput->gameTicks;
                     }
@@ -291,7 +289,7 @@ void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
             // the last button of the sequenz must be pressed int the Current game tick to
             // be valid and then it must be check for how long it has taken to do the input
             // int gameTicks = GetGameTicks();
-            // buferʱ�䣬��ʱ������Ч��tickʱ��
+            //bufer time, the tick time when the command is effective
             if ((nLastTime > (m_pTimer->GetGameTime() - currCommand->nBufferTime)) &&
                 (nLastTime - nTime) <= currCommand->nCommandTime) {
                 m_CurrCommandName = currCommand->strCommand;

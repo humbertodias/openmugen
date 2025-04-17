@@ -40,7 +40,7 @@ void CAirManager::ResetManager() {
 void CAirManager::AddAction(s32 nActionNumber) {
     RealocateActionBlock();
 
-    // restet Complete animtime of the action block
+    // reset Complete animtime of the action block
     nAnimTime        = 0;
     nTotalElement    = 0;
     nElementListSize = 100;
@@ -58,7 +58,7 @@ void CAirManager::AddAction(s32 nActionNumber) {
     nTotalActionBlock++;
 }
 
-// Reallocates unessery memory
+// Reallocates unnecessary memory
 void CAirManager::RealocateActionBlock() {
     if (nTotalActionBlock > 0) {
         lpActionList[nTotalActionBlock - 1].AnimationElement =

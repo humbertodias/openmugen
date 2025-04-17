@@ -15,7 +15,7 @@ class CAllocater {
     void SetMemListFree(MEMLIST* lpList);
 
    public:
-    // Constructor & Desctructor
+    // Constructor & Deconstructor
     CAllocater(char* strName);
 
     ~CAllocater();
@@ -40,7 +40,7 @@ class CMemManager {
     CAllocater* lpAlloc[7];
 
    public:
-    // Constructor & Desctructor
+    // Constructor & Deconstructor
     CMemManager();
 
     ~CMemManager();

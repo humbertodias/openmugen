@@ -11,7 +11,7 @@ const int ConHDParmPerState = 40;
 const int NUMTRIGGER        = 20;
 const int PARAMS            = 10;
 const int T_TRIGGERALL      = 192;
-// û�в���
+// no parameters
 const int NOPARAM = -333;
 
 // #define MAX_PATH 255
@@ -35,7 +35,7 @@ enum KEY_NAMES {
     KEY_COUNT
 };
 
-// ������ʶ��
+// operation identifier
 enum OPCODES {
     OP_PUSH = 0,
     OP_POP,
@@ -490,7 +490,7 @@ enum {
     Control_Width,
 };
 
-// control�����õ�����ö�٣���ص���һ�����ʽ����ֱ�Ӹ�ֵ
+// control - The property enumeration set in is an expression, not a direct assignment.
 enum ConParmName {
     CPN_value = 1,
     CPN_emem,
@@ -500,7 +500,7 @@ enum ConParmName {
     CPN_y,
 };
 
-// control HItDef�����õ�����ö�٣���ص���һ�����ʽ����ֱ�Ӹ�ֵ
+// control HItDef
 enum CONTROLHITDEFParmName {
     CHD_attr = 1,
     CHD_hitflag,
@@ -589,10 +589,10 @@ enum CONTROLHITDEFParmName {
 enum Types { stand = 0, crouch, air, liedown, attack, idle, hit, none, untouch };
 
 // FlipFlags for air manager
-//  ��ȡair�ļ�ʱ��ʹ��
+// Used when reading air files
 enum FlipFlag { HFLIPFLAG = 1, VFLIPFLAG = 2, HVFLIPFLAG = 3 };
 
-// ����ʱ���Լ���״̬
+// Your state when attacking
 enum HitDef_Attr_SelfType_Enum {
     HitDef_Attr_SelfType_Stand = 0,
     HitDef_Attr_SelfType_Crouch,
@@ -601,7 +601,7 @@ enum HitDef_Attr_SelfType_Enum {
 
 static char HitDef_Attr_SelfType[] = {'S', 'C', 'A'};
 
-// �����ĵȼ�
+// Attack level
 enum HitDef_Attr_LevelType_Enum {
     HitDef_Attr_AtkLevel_Normal = 0,
     HitDef_Attr_AtkLevel_Special,
@@ -610,7 +610,7 @@ enum HitDef_Attr_LevelType_Enum {
 
 static char HitDef_Attr_LevelType[] = {'N', 'S', 'H'};
 
-// ��������
+// Attack type
 enum HitDef_Attr_AtkType_Enum {
     HitDef_Attr_AtkType_Attack = 0,
     HitDef_Attr_AtkType_Throw,
@@ -619,7 +619,7 @@ enum HitDef_Attr_AtkType_Enum {
 
 static char HitDef_Attr_AtkType[] = {'A', 'T', 'P'};
 
-// constö��
+// const enumeration
 static char* strConstType[] = {
     "Data.life",
     0,
