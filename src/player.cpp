@@ -202,14 +202,17 @@ void CPlayer::UpDatePlayer()
 {
 //	CInput::ProcessInput(m_keyData);
 
-	Uint8 *keystate = SDL_GetKeyState(NULL);
+	// Uint8 *keystate = SDL_GetKeyState(NULL);
+   const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
 
 	//Process keyboard input
 	if( m_keyData->bKeyBoard )
 	{
 	for( int k = 0; k < KEY_COUNT; k++ )
 	{
-		m_keyData->keyInfo[ k ].isPressed = keystate[ m_keyData->keyInfo[ k ].sdlKeycode ];
+		SDL_Scancode scancode = SDL_GetScancodeFromKey(m_keyData->keyInfo[ k ].sdlKeycode);
+		m_keyData->keyInfo[ k ].isPressed = keystate[ scancode ];
 	}
 	}
 

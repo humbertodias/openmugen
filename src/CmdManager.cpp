@@ -258,7 +258,7 @@ bool CCmdManager::LoadCMDFile( const char* file )
 void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
 {
     m_CurrCommandName = NULL;
-    m_KeyBuffer[ m_KeyIndex ].keyBitfield = 0; // bufferÊÇÓÃÀ´´æ´¢ÉÏ´ÎµÄ¼üÖµ
+    m_KeyBuffer[ m_KeyIndex ].keyBitfield = 0; // bufferï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½Ï´ÎµÄ¼ï¿½Öµ
   
     m_KeyBuffer[ m_KeyIndex ].gameTicks = m_pTimer->GetGameTime();
 
@@ -284,46 +284,46 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
 
     PLCOMMAND* currCommand = m_Commands;
     
-    for( int a = 0; a < m_CommandCount; a++ )// ±éÀúËùÓÐÃüÁî
+    for( int a = 0; a < m_CommandCount; a++ )// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {           
         int nTime = -1, nLastTime = -1;
         int currKeyIndex = 0;
 
-		// Ê¹ÓÃÀý×Ócommand = ~D, DF, F, x½²½â
-		// ×î³õ´ÓxÅÐ¶¨£¬°´ÏÂ£¬ÇÒÓëÒªÇóÒ»ÖÂ£¬½«¼ÇÂ¼×îºóµÄÊ±¼ä£¬È»ºócurrKeyIndex++£¬½«bufferÅÐ¶¨ÏòÇ°ÍÆ½ø
-		// F£¬DF£¬Ò»ÖÂµÄÊ±ºòÏòÇ°×ß£¬Ö±µ½~DÒ»ÖÂ£¬¼ÇÂ¼µÚÒ»Ê±¼ä£¬ÅÐ¶¨ÊÇ·ñ³¬³ö¡£
-        for( int b = currCommand->nHowManyCommand - 1; b >= 0; b-- )// Ò»¸öÃüÁî£¬ÅÐ¶ÏÊÇ·ñÆ¥ÅäËùÓÐ°´¼ü
+		// Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½command = ~D, DF, F, xï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬È»ï¿½ï¿½currKeyIndex++ï¿½ï¿½ï¿½ï¿½bufferï¿½Ð¶ï¿½ï¿½ï¿½Ç°ï¿½Æ½ï¿½
+		// Fï¿½ï¿½DFï¿½ï¿½Ò»ï¿½Âµï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ß£ï¿½Ö±ï¿½ï¿½~DÒ»ï¿½Â£ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ò»Ê±ï¿½ä£¬ï¿½Ð¶ï¿½ï¿½Ç·ñ³¬³ï¿½ï¿½ï¿½
+        for( int b = currCommand->nHowManyCommand - 1; b >= 0; b-- )// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½î£¬ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½ï¿½ï¿½
         {
             bool bCommand = false;
-            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_ON_RELEASE ) != 0 );// °´¼üÊÇ·ñÐèÒª·Å¿ª
-            bool onHold = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_MUST_BE_HELD ) != 0 );// ÊÇ·ñÒªÇó°´×¡
-            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY ) != 0 );// ÊÇ·ñÊÇËÄ¸ö·½Ïò
-            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT ) != 0 );// ÊÇ·ñ½ûÖ¹ÓÐÆäËû°´¼ü°´ÏÂ
-            int gameTicksToHold = currCommand->nCommand[ b ].gameTicksForHold; // °´¼ü°´ÏÂµÄÊ±¼ä
-            int keyCode = currCommand->nCommand[ b ].keyCode;// °´¼ü×ªÂë
+            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_ON_RELEASE ) != 0 );// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Å¿ï¿½
+            bool onHold = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_MUST_BE_HELD ) != 0 );// ï¿½Ç·ï¿½Òªï¿½ï¿½×¡
+            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY ) != 0 );// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
+            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT ) != 0 );// ï¿½Ç·ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            int gameTicksToHold = currCommand->nCommand[ b ].gameTicksForHold; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ê±ï¿½ï¿½
+            int keyCode = currCommand->nCommand[ b ].keyCode;// ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
             
-            for( ; currKeyIndex < m_KeyBufferSize; currKeyIndex++ )// Ã¿¸ö¼ü¶ÔËùÓÐbuff´¦Àí£¡£¡£¡£¡
+            for( ; currKeyIndex < m_KeyBufferSize; currKeyIndex++ )// Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½buffï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             {
-                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -currKeyIndex ) ];// ´Óµ±Ç°µÄÊäÈë¼üÖµ£¬ÏòÇ°±éÀú
+                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -currKeyIndex ) ];// ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
                 bool keyDown = (( frameInput->keyBitfield & keyCode ) == keyCode );
-                if( keyDown && !use4Way )// ÐèÒª°´¼ü°´ÏÂ£¬²»ÊÇËÄ¸ö·½Ïò
+                if( keyDown && !use4Way )// ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
                     int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
                     int frameInputDirs = ( frameInput->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
-                    keyDown = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );//°´ÏÂµÄ°´Å¥ÊÇ·ñÊÇ·½Ïò¼ü£¬ÊÇÔòÒªÓëÐèÇóÒ»ÖÂ£¬²»ÊÇ£¬ÔòÕýÈ·£¬¼ÌÐøÅÐ¶¨
+                    keyDown = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );//ï¿½ï¿½ï¿½ÂµÄ°ï¿½Å¥ï¿½Ç·ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
                 }
                 
                 bool buttonConditionsMet = false;
                 
                 // see how long it's been held                
-                if( onRelease != keyDown )// °´¼üËÉ¿ª£¬²¢±£³ÖÒ»¶¨Ê±¼äÊ±¼ä(keyDown&&!onRelease£©
+                if( onRelease != keyDown )// ï¿½ï¿½ï¿½ï¿½ï¿½É¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½Ê±ï¿½ï¿½(keyDown&&!onReleaseï¿½ï¿½
                 {
                     int gameTicksHeld = 0;
                     for( int k = currKeyIndex + 1; k < m_KeyBufferSize; k++ )
                     {
-                        PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -k ) ];// ´Óµ±Ç°µÄÊäÈë¼üÖµ£¬ÏòÇ°±éÀú
+                        PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -k ) ];// ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
                         bool keyDown2 = (( frameInput2->keyBitfield & keyCode ) == keyCode );
-                        if( keyDown2 && !use4Way )// °´¼ü°´ÏÂ£¬²»ÊÇËÄ¸ö·½Ïò
+                        if( keyDown2 && !use4Way )// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
                         {
                             int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
                             int frameInputDirs = ( frameInput2->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
@@ -358,7 +358,7 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
                         }                        
                     }
                 }
-                // Èç¹ûµ¥¼ü¹ý¹ØÁË£¬¾Í¼ÇÂ¼¿ªÊ¼½áÊøÊ±¼ä£¬¼ÌÐøÏÂÒ»¸ö°´¼ü£¬
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Í¼ï¿½Â¼ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if( buttonConditionsMet )
 				{
 					//if its the first element store the time of it
@@ -386,7 +386,7 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
             // the last button of the sequenz must be pressed int the Current game tick to
             // be valid and then it must be check for how long it has taken to do the input
            // int gameTicks = GetGameTicks();
-			// buferÊ±¼ä£¬¼´Ê±ÃüÁîÓÐÐ§µÄtickÊ±¼ä
+			// buferÊ±ï¿½ä£¬ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½tickÊ±ï¿½ï¿½
            if( ( nLastTime > ( m_pTimer->GetGameTime()- currCommand->nBufferTime )) && ( nLastTime - nTime ) <= currCommand->nCommandTime )
             {
                 m_CurrCommandName = currCommand->strCommand;

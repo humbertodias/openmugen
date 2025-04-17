@@ -48,14 +48,15 @@ bool CSDLManager::Init()
     }
     PrintMessage("CSDLManager:: SDL_Init OK");
     //Set the icon for the application
-    SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
+    // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
     
-    //Now init ouer Video System
+    //Now init our Video System
     if(!m_VideoSystem.InitSystem())
     {
         PrintMessage("CSDLManager:: VideoSystem Init Failed");
         return false;
     }
+
     PrintMessage("CSDLManager::VideoSystem Init OK");
 
 	return true;

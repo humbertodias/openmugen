@@ -11,7 +11,7 @@ const int ConHDParmPerState = 40;
 const int NUMTRIGGER = 20;
 const int PARAMS = 10;
 const int T_TRIGGERALL = 192;
-// Ã»ÓÐ²ÎÊý
+// Ã»ï¿½Ð²ï¿½ï¿½ï¿½
 const int NOPARAM = -333;
 
 //#define MAX_PATH 255
@@ -28,7 +28,7 @@ enum {
 
 
 
-//Define  Controller buttoms
+//Define  Controller buttons
 enum KEY_NAMES
 {
 	KEY_UP,
@@ -47,7 +47,7 @@ enum KEY_NAMES
 };
 
 
-// ²Ù×÷±êÊ¶·û
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½
 enum OPCODES
 {
 	OP_PUSH=0,
@@ -312,7 +312,7 @@ static char * strTriggerType[] = {
 	0,
 };
 
-// ÓÎÏ·×Ô¶¨Òå±äÁ¿
+// ï¿½ï¿½Ï·ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum PARAMVALUES
 {
 	PA_VALUE=128,
@@ -512,7 +512,7 @@ enum{
 
 
 
-// controlÖÐÉèÖÃµÄÊôÐÔÃ¶¾Ù£¬Ïà¹ØµÄÊÇÒ»¸ö±í´ïÊ½£¬²»Ö±½Ó¸³Öµ
+// controlï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Ù£ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó¸ï¿½Öµ
 enum ConParmName
 {
 	CPN_value = 1,
@@ -523,7 +523,7 @@ enum ConParmName
 	CPN_y,
 };
 
-// control HItDefÖÐÉèÖÃµÄÊôÐÔÃ¶¾Ù£¬Ïà¹ØµÄÊÇÒ»¸ö±í´ïÊ½£¬²»Ö±½Ó¸³Öµ
+// control HItDefï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Ù£ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó¸ï¿½Öµ
 enum CONTROLHITDEFParmName
 {
 	CHD_attr = 1,
@@ -626,7 +626,7 @@ enum Types
 
 
 //FlipFlags for air manager
-// ¶ÁÈ¡airÎÄ¼þÊ±ºòÊ¹ÓÃ
+// ï¿½ï¿½È¡airï¿½Ä¼ï¿½Ê±ï¿½ï¿½Ê¹ï¿½ï¿½
 enum FlipFlag
 {
 	HFLIPFLAG=1,
@@ -636,7 +636,7 @@ enum FlipFlag
 };
 
 
-// ¹¥»÷Ê±ºò×Ô¼ºµÄ×´Ì¬
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½×´Ì¬
 enum HitDef_Attr_SelfType_Enum
 {
 	HitDef_Attr_SelfType_Stand=0,
@@ -645,7 +645,7 @@ enum HitDef_Attr_SelfType_Enum
 };
 static char HitDef_Attr_SelfType[] = {'S','C','A'};
 
-// ¹¥»÷µÄµÈ¼¶
+// ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÈ¼ï¿½
 enum HitDef_Attr_LevelType_Enum
 {
 	HitDef_Attr_AtkLevel_Normal=0,
@@ -655,7 +655,7 @@ enum HitDef_Attr_LevelType_Enum
 static char HitDef_Attr_LevelType[] = {'N','S','H'};
 
 
-// ¹¥»÷ÀàÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum HitDef_Attr_AtkType_Enum
 {
 	HitDef_Attr_AtkType_Attack=0,
@@ -665,7 +665,7 @@ enum HitDef_Attr_AtkType_Enum
 static char HitDef_Attr_AtkType[] = {'A','T','P'};
 
 
-// constÃ¶¾Ù
+// constÃ¶ï¿½ï¿½
 static char* strConstType[] = {
 	"Data.life",
 	0,

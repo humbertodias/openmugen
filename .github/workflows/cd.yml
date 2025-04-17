@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev libsdl1.2-compat-dev build-essential cmake make
+        run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev build-essential cmake make
 
       - name: Build tar.gz
         run: make clean targz/data build targz/openmugen
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install
-        run: brew install sdl2 sdl2_image sdl2_gfx sdl12-compat cmake make
+        run: brew install sdl2 sdl2_image sdl2_gfx cmake make
 
       - name: Build tar.gz
         run: make clean targz/data build targz/openmugen

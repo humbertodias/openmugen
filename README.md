@@ -13,7 +13,6 @@ The goal is to provide a simple, extensible, and cross-platform foundation for c
 ![OpenMugen Gameplay](https://github.com/user-attachments/assets/e7a9a194-2dde-4d4f-b41a-24b9154fe2fb)
 
 
-
 ## 🕹 Controls
 
 | Player | Movement | Punch     | Kick     |
@@ -39,7 +38,7 @@ The following libraries must be installed:
 ### 🐧 Ubuntu/Debian
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev libsdl1.2-compat
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev libsdl1.2-compat-dev
 ```
 
 To build the project:

@@ -1,0 +1,50 @@
+name: web
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: 
+
+defaults:
+  run:
+    shell: bash
+
+# required for upload
+permissions:
+  contents: write
+
+jobs:
+
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev build-essential cmake make
+
+      - name: Set up Emscripten
+        run: |
+          sudo apt update -y
+          sudo apt install -y build-essential clang python3 cmake git
+
+          git clone https://github.com/emscripten-core/emsdk.git
+          cd emsdk
+
+          ./emsdk install latest
+          ./emsdk activate latest
+          
+          source ./emsdk_env.sh
+          echo "source $(pwd)/emsdk_env.sh" >> $GITHUB_ENV        
+
+      - name: Build WebAssembly
+        run: |
+          source $GITHUB_ENV
+          make clean build-wasm
+
+        # Pages
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build

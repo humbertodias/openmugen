@@ -87,19 +87,20 @@ void CGame::RunGame()
           break;
           //We are in the menu screen
           case GMENU:
-          
+
           break;
-       
-       
+
+
        }
      //  m_SdlManager.m_VideoSystem.DrawText(10,20,"%i",m_Timer.GetGameTime());
-       //Now draw the content to the screen     
+       //Now draw the content to the screen
        m_SdlManager.m_VideoSystem.Draw();
        //Limits the game speed to 60Hz
-      
     }
 
 }
+
+
 //Checks the SDL event list
 void CGame::CheckSDL()
 {

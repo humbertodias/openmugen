@@ -146,7 +146,8 @@ void CAllocater::FreeAllocater()
      {
        for(u32 i=0;i<nMemListSize;i++)
        {
-         if(lpMemList[i].nType==ALLOC) Free(lpMemList[i].adrress);      
+           // TODO - remover
+         // if(lpMemList[i].nType==ALLOC) Free(lpMemList[i].adrress);
        
        }
                

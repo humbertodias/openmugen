@@ -61,10 +61,13 @@ void NormalFlipHV(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask);
 
     
 private:
-    SDL_Surface *screen;
+    // SDL_Surface *screen;
+    SDL_Window *window;
+    SDL_Renderer *renderer;
     SDL_Surface *work;
     SDL_Surface *font;
-    
+    SDL_Texture* texture;
+
     Uint8* deltaPtr;
     Uint32 nowTime,lastTime;
     Uint32 nFpsCount;

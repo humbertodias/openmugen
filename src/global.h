@@ -5,7 +5,7 @@
 #define VER     "Alpha 2"
 #define OMTITLE "OpenMugen"
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 //SDL_GFX libery
 

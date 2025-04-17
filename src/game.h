@@ -24,6 +24,10 @@
 #define GAME_H
 
 
+enum { GMENU =1,
+    GFIGHTGAME
+  }; 
+  
 //This is the main game class 
 class CGame
 {
@@ -34,14 +38,14 @@ public:
     
 void InitGame();
 void RunGame();
+
 void Quit();
 
 
-private:
+// private:
+public:
 
-enum { GMENU =1,
-       GFIGHTGAME
-     }; 
+
 
 void Crash();
 void CheckSDL();
