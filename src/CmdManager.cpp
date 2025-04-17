@@ -240,7 +240,7 @@ void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
                         PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[AdjustKeyIndex(m_KeyIndex, -k)];
                         // Button pressed, not in four directions
                         bool keyDown2 = ((frameInput2->keyBitfield & keyCode) == keyCode);
-                        if (keyDown2 && !use4Way)  // �������£������ĸ�����
+                        if (keyDown2 && !use4Way)  // Button pressed, not in four directions
                         {
                             int keyCodeDirs    = (keyCode & PLC_ALL_DIRECTIONS_BITFIELD);
                             int frameInputDirs = (frameInput2->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD);

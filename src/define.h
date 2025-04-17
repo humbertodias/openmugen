@@ -296,7 +296,7 @@ static char* strTriggerType[] = {
     0,
 };
 
-// ��Ϸ�Զ������
+// Game custom variables
 enum PARAMVALUES {
     PA_VALUE = 128,
     PA_XVALUE,
