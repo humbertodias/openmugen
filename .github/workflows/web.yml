@@ -34,13 +34,10 @@ jobs:
 
           ./emsdk install latest
           ./emsdk activate latest
-          
-          source ./emsdk_env.sh
-          echo "source $(pwd)/emsdk_env.sh" >> $GITHUB_ENV        
 
       - name: Build WebAssembly
         run: |
-          source $GITHUB_ENV
+          source ./emsdk_env.sh
           make clean build-wasm
 
         # Pages
