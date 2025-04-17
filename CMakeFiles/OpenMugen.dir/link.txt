@@ -1,1 +1,0 @@
-/home/runner/work/sdl-openmugen/sdl-openmugen/emsdk/upstream/emscripten/em++  -Wno-write-strings -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sSDL2_IMAGE_FORMATS='["png","bmp"]' -sFULL_ES3=1 -sASYNCIFY -sINITIAL_MEMORY=134217728 -sMAXIMUM_MEMORY=268435456 -sALLOW_MEMORY_GROWTH=1 --preload-file data -O3 -DNDEBUG @CMakeFiles/OpenMugen.dir/objects1.rsp -o index.html

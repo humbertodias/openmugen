@@ -1,3 +1,0 @@
-/home/runner/work/sdl-openmugen/sdl-openmugen/build/CMakeFiles/OpenMugen.dir
-/home/runner/work/sdl-openmugen/sdl-openmugen/build/CMakeFiles/edit_cache.dir
-/home/runner/work/sdl-openmugen/sdl-openmugen/build/CMakeFiles/rebuild_cache.dir
