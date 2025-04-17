@@ -79,7 +79,7 @@ void CPlayer::SetPointers(CVideoSystem* p, CAllocater* a, CGameTimer* t) {
 // ToDo:Handel the .def file loading
 bool CPlayer::LoadPlayer(const char* strPlayer) {
     CStateParser StateParser;
-    // rest memory allocater
+    // rest memory allocator
     m_pAlloc->ResetAllocater();
 
     m_SffManager.ResetManager();
@@ -162,18 +162,7 @@ void CPlayer::ExecuteController(PLSTATE* tempState) {
 
 // updates all internal stuff of the player
 void CPlayer::UpDatePlayer() {
-    //	CInput::ProcessInput(m_keyData);
-
-    const Uint8* keystate = SDL_GetKeyboardState(NULL);
-
-    // Process keyboard input
-    if (m_keyData->bKeyBoard) {
-        for (int k = 0; k < KEY_COUNT; k++) {
-            SDL_Scancode scancode           = SDL_GetScancodeFromKey(m_keyData->keyInfo[k].sdlKeycode);
-            m_keyData->keyInfo[k].isPressed = keystate[scancode];
-        }
-    }
-
+    CInput::ProcessInput(m_keyData);
     m_CmdManager.Update(m_keyData, bRightFaced);
     HandleFSM();
     HandlePhysic();
@@ -206,7 +195,7 @@ void CPlayer::Debug() {
 
 // Change State controller
 void CPlayer::ChangeState(s32 nStateNumber) {
-    // restet StateTime
+    // reset StateTime
     nStateTime = 0;
     // get the statedef
     lpCurrStatedef = m_StateManager.GetStateDef(nStateNumber);
