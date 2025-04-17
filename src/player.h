@@ -1,7 +1,7 @@
 //    Open Mugen is a redevelopment of Elecbyte's M.U.G.E.N wich will be 100% compatible to it
 //    Copyright (C) 2004  Sahin Vardar
 //
-//    If you know bugs or have a wish on Open Muegn o
+//    If you know bugs or have a wish on Open Mugen o
 //    Feel free and email me: sahin_v@hotmail.com  ICQ:317502935
 //    Web: http://openmugen.sourceforge.net/
 //    --------------------------------------------------------------------------
@@ -88,7 +88,7 @@ class CPlayer {
     void SetDebug(bool bDebug) { bDebugInfo = bDebug; }
     void FaceLeft() { bRightFaced = false; }
     void FaceRight() { bRightFaced = true; }
-    // Set the the ground value of the stage
+    // Set the ground value of the stage
     void SetGroundValue(float yLimit) { nGround = yLimit; }
 
     // Player Controllers

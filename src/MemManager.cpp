@@ -51,16 +51,16 @@ void* CAllocater::Alloc(size_t nSize, int nMemInit) {
     if (i > nMemListSize) PrintMessage("CAllocater::no free block found");
 
     lpMemList[i].nType   = ALLOC;
-    lpMemList[i].adrress = malloc(nSize);
+    lpMemList[i].address = malloc(nSize);
 
-    if (lpMemList[i].adrress == 0) PrintMessage("CAllocater::malloc failed");
-    memset(lpMemList[i].adrress, 0, nSize);
+    if (lpMemList[i].address == 0) PrintMessage("CAllocater::malloc failed");
+    memset(lpMemList[i].address, 0, nSize);
     lpMemList[i].nSize = nSize;
 
     nAllocNumber++;
     nAllocSize += nSize;
 
-    return lpMemList[i].adrress;
+    return lpMemList[i].address;
 }
 
 // reallocate the given memory block and save the new address in the list
@@ -69,7 +69,7 @@ void* CAllocater::Realloc(void* CurMem, size_t nSize) {
     bool bFound = false;
 
     for (i = 0; i < nMemListSize; i++) {
-        if (CurMem == lpMemList[i].adrress && lpMemList[i].nType == ALLOC) {
+        if (CurMem == lpMemList[i].address && lpMemList[i].nType == ALLOC) {
             bFound = true;
             break;
         }
@@ -79,11 +79,11 @@ void* CAllocater::Realloc(void* CurMem, size_t nSize) {
 
     nAllocSize -= lpMemList[i].nSize;
 
-    lpMemList[i].adrress = realloc(lpMemList[i].adrress, nSize);
+    lpMemList[i].address = realloc(lpMemList[i].address, nSize);
     lpMemList[i].nSize   = nSize;
     nAllocSize += nSize;
 
-    return lpMemList[i].adrress;
+    return lpMemList[i].address;
 }
 
 // search the list for the allocated block and free it from memory
@@ -92,7 +92,7 @@ void CAllocater::Free(void* CurMem) {
     bool bFound = false;
 
     for (i = 0; i < nMemListSize; i++) {
-        if (CurMem == lpMemList[i].adrress && lpMemList[i].nType == ALLOC) {
+        if (CurMem == lpMemList[i].address && lpMemList[i].nType == ALLOC) {
             bFound = true;
             break;
         }
@@ -100,8 +100,8 @@ void CAllocater::Free(void* CurMem) {
 
     if (!bFound) PrintMessage("free failed %x was never allocated", CurMem);
 
-    free(lpMemList[i].adrress);
-    lpMemList[i].adrress = 0;
+    free(lpMemList[i].address);
+    lpMemList[i].address = 0;
     lpMemList[i].nType   = FREE;
     nAllocSize -= lpMemList[i].nSize;
 
@@ -113,7 +113,7 @@ void CAllocater::FreeAllocater() {
     if (!bFree) {
         for (u32 i = 0; i < nMemListSize; i++) {
             if (lpMemList == NULL) break;
-            if (lpMemList[i].nType == ALLOC) Free(lpMemList[i].adrress);
+            if (lpMemList[i].nType == ALLOC) Free(lpMemList[i].address);
         }
     }
     // PrintMessage("CAllocater::%s unfreed %i bytes",strAllocName,nAllocSize);

@@ -24,7 +24,7 @@ struct KEYELEMENT {
     Uint16 isPressed, sdlKeycode;
 };
 
-// now lets define a command
+// now let's define a command
 
 #define PLC_KEYMOD_MUST_BE_HELD (1 << 0)
 #define PLC_KEYMOD_DETECT_AS_4WAY (1 << 1)
@@ -67,11 +67,11 @@ struct KEYBOARDDATA {
     bool       bKeyBoard;
 };
 
-// memlist for Allocater class
+// memlist for Allocator class
 struct MEMLIST {
     u8     nType;
     size_t nSize;
-    void*  adrress;
+    void*  address;
 };
 
 // font struct

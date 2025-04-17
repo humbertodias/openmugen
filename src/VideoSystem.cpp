@@ -1,7 +1,7 @@
 //    Open Mugen is a redevelopment of Elecbyte's M.U.G.E.N wich will be 100% compatible to it
 //    Copyright (C) 2004  Sahin Vardar
 //
-//    If you know bugs or have a wish on Open Muegn or (money/girls/a car) for me ;-)
+//    If you know bugs or have a wish on Open Mugen or (money/girls/a car) for me ;-)
 //    Feel free and email me: sahin_v@hotmail.com  ICQ:317502935
 //    Web: http://openmugen.sourceforge.net/
 //    --------------------------------------------------------------------------
@@ -24,7 +24,7 @@
 
 void scale2x(SDL_Surface* src, SDL_Surface* dst);
 
-// Konstructor
+// Constructor
 CVideoSystem::CVideoSystem() {
     work     = NULL;
     window   = NULL;
@@ -131,7 +131,6 @@ void CVideoSystem::LoadFont() {
         return;
     }
 
-    // Set the color key (transparent color) for the texture using SDL_SetTextureColorMod
     // Here, we're making black (0,0,0) transparent in the texture
     SDL_SetTextureColorMod(textureFont, 0, 0, 0);  // Set black to transparent
 
@@ -164,7 +163,7 @@ void CVideoSystem::Draw() {
 
     FilterImage();
 
-    //  scale2x(work,screen);
+    // scale2x(work,screen);
 
     if (texture == NULL) {
         PrintMessage("CVideoSystem::BlitSurface Create Texture Failed %s", SDL_GetError());

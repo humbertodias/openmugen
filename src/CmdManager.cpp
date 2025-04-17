@@ -180,7 +180,7 @@ bool CCmdManager::LoadCMDFile(const char* file) {
 
 void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
     m_CurrCommandName                   = NULL;
-    m_KeyBuffer[m_KeyIndex].keyBitfield = 0;  // buffer�������洢�ϴεļ�ֵ
+    m_KeyBuffer[m_KeyIndex].keyBitfield = 0;  // buffer
 
     m_KeyBuffer[m_KeyIndex].gameTicks = m_pTimer->GetGameTime();
 
@@ -199,7 +199,7 @@ void CCmdManager::Update(KEYBOARDDATA* keys, bool facingRight) {
 
     PLCOMMAND* currCommand = m_Commands;
 
-    for (int a = 0; a < m_CommandCount; a++)  // ������������
+    for (int a = 0; a < m_CommandCount; a++)
     {
         int nTime = -1, nLastTime = -1;
         int currKeyIndex = 0;

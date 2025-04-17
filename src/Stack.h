@@ -1,7 +1,7 @@
 //    Open Mugen is a redevelopment of Elecbyte's M.U.G.E.N wich will be 100% compatible to it
 //    Copyright (C) 2004  Sahin Vardar
 //
-//    If you know bugs or have a wish on Open Muegn or (money/girls/a car) for me ;-)
+//    If you know bugs or have a wish on Open Mugen or (money/girls/a car) for me ;-)
 //    Feel free and email me: sahin_v@hotmail.com  ICQ:317502935
 //    Web: http://openmugen.sourceforge.net/
 //    --------------------------------------------------------------------------
