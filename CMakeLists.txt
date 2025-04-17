@@ -65,11 +65,11 @@ else()
         -lSDL2_image
         -lSDL2_gfx
     )
-endif()
 
-# macOS-specific settings
-if(APPLE AND NOT USING_EMSCRIPTEN)
-    find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
-    find_library(APPKIT_FRAMEWORK AppKit)
-    target_link_libraries(${PROJECT} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDLMain)
+    # macOS-specific settings
+    if(APPLE)
+        find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
+        find_library(APPKIT_FRAMEWORK AppKit)
+        target_link_libraries(${PROJECT} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDL2)
+    endif()
 endif()
