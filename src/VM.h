@@ -20,7 +20,6 @@
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
 #ifndef VM_H
 #define VM_H
 
@@ -29,12 +28,12 @@
 class CVirtualMachine {
     CPlayer *m_pPlayer1, *m_pPlayer2;
 
-public:
+   public:
     CVirtualMachine();
 
     ~CVirtualMachine();
 
-    float Execute(INSTRUCTION *pInst);
+    float Execute(INSTRUCTION* pInst);
 
     void PushValue();
 
@@ -156,7 +155,7 @@ public:
 
     void HitCount();
 
-    //void HitDefAttr()
+    // void HitDefAttr()
     void HitFall();
 
     void HitOver();
@@ -303,38 +302,34 @@ public:
 
     void ProjGuardedTime();
 
-    void NOP() {
-    };
+    void NOP() {};
 
     void MODOP();
 
-
-    //helper functions
+    // helper functions
     void Save();
 
     void Restore();
 
     void InitFunctTable();
 
-    void SetPlayers(CPlayer *p1, CPlayer *p2);
+    void SetPlayers(CPlayer* p1, CPlayer* p2);
 
-    //variables
+    // variables
     CStack m_Stack;
 
-    int nCurrentIns;
-    INSTRUCTION *pCurrentIns;
-    Stacktype m_pop;
-    float temp1, temp2, temp3;
-    float nSave;
-    //pointer to player
-    void *m_p1;
-    void *m_p2;
-
+    int          nCurrentIns;
+    INSTRUCTION* pCurrentIns;
+    Stacktype    m_pop;
+    float        temp1, temp2, temp3;
+    float        nSave;
+    // pointer to player
+    void* m_p1;
+    void* m_p2;
 
     typedef void (CVirtualMachine::*pt2Member)();
 
     pt2Member pFuncTable[NUMFUNCT];
 };
-
 
 #endif

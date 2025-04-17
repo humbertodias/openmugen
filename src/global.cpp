@@ -1,11 +1,10 @@
 #include "global.h"
 
-FILE *pLogFile = NULL;
+FILE* pLogFile = NULL;
 
-
-void PrintMessage(char *str, ...) {
-    char string[255]; // Temporary string
-    va_list ap; // Pointer to list of arguments
+void PrintMessage(char* str, ...) {
+    char    string[255];  // Temporary string
+    va_list ap;           // Pointer to list of arguments
 
     // Initialize the argument list
     va_start(ap, str);
@@ -17,7 +16,7 @@ void PrintMessage(char *str, ...) {
     va_end(ap);
 
 #ifdef _XBOX
-  pLogFile = fopen("d:\\log.txt", "a+");
+    pLogFile = fopen("d:\\log.txt", "a+");
 #else
     pLogFile = fopen("log.txt", "a+");
 #endif
@@ -37,10 +36,9 @@ void PrintMessage(char *str, ...) {
     printf("\n");
 }
 
-
 void InitLogFile() {
 #ifdef _XBOX
-	pLogFile=fopen("d:\\log.txt","w");
+    pLogFile = fopen("d:\\log.txt", "w");
 #else
     pLogFile = fopen("log.txt", "w");
 #endif

@@ -22,63 +22,61 @@
 #ifndef __PLAYER__H
 #define __PLAYER__H
 
-
 #define NUMFUNCT_CONTROL 140
 
 class CPlayer {
-    CAllocater *m_pAlloc;
-    CVideoSystem *m_pVideoSystem;
-    CSffManager m_SffManager;
-    CAirManager m_AirManager;
-    CStateManager m_StateManager;
-    CGameTimer *m_pTimer;
-    CVirtualMachine *m_pVMachine;
+    CAllocater*         m_pAlloc;
+    CVideoSystem*       m_pVideoSystem;
+    CSffManager         m_SffManager;
+    CAirManager         m_AirManager;
+    CStateManager       m_StateManager;
+    CGameTimer*         m_pTimer;
+    CVirtualMachine*    m_pVMachine;
     CControllerExecuter m_ControllerExec;
-    CCmdManager m_CmdManager;
+    CCmdManager         m_CmdManager;
     // ��ȡ���ã�ӳ�䰴��
-    KEYBOARDDATA *m_keyData;
-    //Player information
-    float x, y;
-    float xVel, yVel;
-    float nGround;
-    s32 nAnimNumber;
-    u32 nStateTime;
-    u8 nStateType;
-    u8 nPhysic;
-    u8 nMoveType;
-    u8 nSprPrio;
-    s16 nLife;
-    s16 nPower;
-    bool bHitDefPresit;
-    bool bHitCounterPresit;
-    bool bMoveHitPresit;
-    bool bCtrl;
-    bool bRightFaced;
-    bool bDebugInfo;
-    bool bHitDef;
-    bool bAlive;
-    PLSTATEDEF *lpCurrStatedef;
+    KEYBOARDDATA* m_keyData;
+    // Player information
+    float       x, y;
+    float       xVel, yVel;
+    float       nGround;
+    s32         nAnimNumber;
+    u32         nStateTime;
+    u8          nStateType;
+    u8          nPhysic;
+    u8          nMoveType;
+    u8          nSprPrio;
+    s16         nLife;
+    s16         nPower;
+    bool        bHitDefPresit;
+    bool        bHitCounterPresit;
+    bool        bMoveHitPresit;
+    bool        bCtrl;
+    bool        bRightFaced;
+    bool        bDebugInfo;
+    bool        bHitDef;
+    bool        bAlive;
+    PLSTATEDEF* lpCurrStatedef;
 
-public:
+   public:
     PLAYERCONST myPlayerConst;
-
 
     CPlayer();
 
     ~CPlayer();
 
-    void SetPointers(CVideoSystem *p, CAllocater *a, CGameTimer *t);
+    void SetPointers(CVideoSystem* p, CAllocater* a, CGameTimer* t);
 
-    bool LoadPlayer(const char *strPlayer);
+    bool LoadPlayer(const char* strPlayer);
 
     void UpDatePlayer();
 
     void DrawPlayer();
 
-    //Set functions
+    // Set functions
     void SetKeyBoard(int playerid);
 
-    void SetVM(CVirtualMachine *p) { m_pVMachine = p; }
+    void SetVM(CVirtualMachine* p) { m_pVMachine = p; }
 
     void SetPos(s16 xAxis, s16 yAxis) {
         x = xAxis;
@@ -90,28 +88,28 @@ public:
     void SetDebug(bool bDebug) { bDebugInfo = bDebug; }
     void FaceLeft() { bRightFaced = false; }
     void FaceRight() { bRightFaced = true; }
-    //Set the the ground value of the stage
+    // Set the the ground value of the stage
     void SetGroundValue(float yLimit) { nGround = yLimit; }
 
-    //Player Controllers
+    // Player Controllers
     void ChangeState(s32 nSateNumber);
 
-    //trigger functions
-    char *GetCommand() { return (char *) m_CmdManager.GetCurrentCommandName(); }
-    bool IsPlayerAlive() { return bAlive; }
-    s32 GetAnim() { return nAnimNumber; }
-    ActionElement *GetCurrAnim() { return m_SffManager.GetCurrAnimation(); }
+    // trigger functions
+    char*          GetCommand() { return (char*)m_CmdManager.GetCurrentCommandName(); }
+    bool           IsPlayerAlive() { return bAlive; }
+    s32            GetAnim() { return nAnimNumber; }
+    ActionElement* GetCurrAnim() { return m_SffManager.GetCurrAnimation(); }
 
     bool IsAnimAviable(s32 nAnim);
 
     bool IsCtrl() { return bCtrl; }
 
-    const char *GetPlayerName() { return this->myPlayerConst.PlayerData.szPlayerName; }
+    const char* GetPlayerName() { return this->myPlayerConst.PlayerData.szPlayerName; }
 
-private:
-    bool CheckState(PLSTATE *tempState);
+   private:
+    bool CheckState(PLSTATE* tempState);
 
-    void ExecuteController(PLSTATE *tempState);
+    void ExecuteController(PLSTATE* tempState);
 
     void HandleFSM();
 
@@ -121,16 +119,16 @@ private:
 
     void Debug();
 
-public: // control����
+   public:  // control����
     void InitFunctTable();
 
-    typedef void (CPlayer::*ptControl)(PLSTATE *);
+    typedef void (CPlayer::*ptControl)(PLSTATE*);
 
     ptControl pFuncTable[NUMFUNCT_CONTROL];
 
-    void ControlType_ChangeAnim(PLSTATE *);
+    void ControlType_ChangeAnim(PLSTATE*);
 
-    void ControlType_ChangeState(PLSTATE *);
+    void ControlType_ChangeState(PLSTATE*);
 };
 
 #endif

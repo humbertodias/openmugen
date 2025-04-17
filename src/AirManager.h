@@ -23,28 +23,27 @@
 #ifndef _AIRMANAGER_H_
 #define _AIRMANAGER_H_
 
-
 class CAirManager {
-    ActionElement *lpActionList;
-    CAllocater *m_pAlloc;
-    u16 nTotalActionBlock;
-    u16 nActionListSize;
-    u16 nAnimTime;
-    u16 nTotalElement;
-    u16 nElementListSize;
-    u16 nTotalCns;
-    u16 nCnsListSize;
-    bool bDefaultClsn;
-    bool bIsClsn1;
-    Clsn pClsn[200];
+    ActionElement* lpActionList;
+    CAllocater*    m_pAlloc;
+    u16            nTotalActionBlock;
+    u16            nActionListSize;
+    u16            nAnimTime;
+    u16            nTotalElement;
+    u16            nElementListSize;
+    u16            nTotalCns;
+    u16            nCnsListSize;
+    bool           bDefaultClsn;
+    bool           bIsClsn1;
+    Clsn           pClsn[200];
 
-public:
+   public:
     CAirManager();
 
     ~CAirManager();
 
-public:
-    void SetAlloc(CAllocater *a) { m_pAlloc = a; }
+   public:
+    void SetAlloc(CAllocater* a) { m_pAlloc = a; }
 
     void AddAction(s32 nActionNumber);
 
@@ -56,9 +55,9 @@ public:
 
     void CreateClsnBox(u16 nNumberOfClsn, bool bClsn1, bool bDefault);
 
-    void OpenAir(char *strFileName);
+    void OpenAir(char* strFileName);
 
-    ActionElement *GetAction(s32 nActionNumber);
+    ActionElement* GetAction(s32 nActionNumber);
 
     void CleanUp();
 

@@ -4,30 +4,21 @@
 #define MAXCOMMAND 30
 
 //
-const int INSPERTRIGGER = 40;
-const int INSPerConParam = 100;
-const int ConParmPerState = 40;
+const int INSPERTRIGGER     = 40;
+const int INSPerConParam    = 100;
+const int ConParmPerState   = 40;
 const int ConHDParmPerState = 40;
-const int NUMTRIGGER = 20;
-const int PARAMS = 10;
-const int T_TRIGGERALL = 192;
+const int NUMTRIGGER        = 20;
+const int PARAMS            = 10;
+const int T_TRIGGERALL      = 192;
 // û�в���
 const int NOPARAM = -333;
 
-//#define MAX_PATH 255
+// #define MAX_PATH 255
 
-enum {
-    MAINMENU = 0,
-    STAGE = 1,
-    ENGINE = 2,
-    P1 = 3,
-    P2 = 4,
-    P3 = 5,
-    P4 = 6
-};
+enum { MAINMENU = 0, STAGE = 1, ENGINE = 2, P1 = 3, P2 = 4, P3 = 5, P4 = 6 };
 
-
-//Define  Controller buttons
+// Define  Controller buttons
 enum KEY_NAMES {
     KEY_UP,
     KEY_DOWN,
@@ -43,7 +34,6 @@ enum KEY_NAMES {
     KEY_BUTTON_PAUSE,
     KEY_COUNT
 };
-
 
 // ������ʶ��
 enum OPCODES {
@@ -77,7 +67,6 @@ enum OPCODES {
     OP_XOR,
     OP_SQUARE,
     OP_NEG,
-
 
     OP_Abs,
     OP_Acos,
@@ -193,9 +182,8 @@ enum OPCODES {
     OP_STOP,
 };
 
-
-//All triggers
-static char *strTriggerType[] = {
+// All triggers
+static char* strTriggerType[] = {
     "Abs",
     "Acos",
     "Alive",
@@ -319,9 +307,9 @@ enum PARAMVALUES {
     PA_SYSFVAR,
 };
 
-//This are all documented Controllers
-//TODO: find the undocumented controllers
-static char *strControllerTypes[] = {
+// This are all documented Controllers
+// TODO: find the undocumented controllers
+static char* strControllerTypes[] = {
     "AfterImage",
     "AfterImageTime",
     "AllPalFX",
@@ -502,7 +490,6 @@ enum {
     Control_Width,
 };
 
-
 // control�����õ�����ö�٣���ص���һ�����ʽ����ֱ�Ӹ�ֵ
 enum ConParmName {
     CPN_value = 1,
@@ -598,29 +585,12 @@ enum CONTROLHITDEFParmName {
     CHD_fall_envshake_phase,
 };
 
+// StateTypes
+enum Types { stand = 0, crouch, air, liedown, attack, idle, hit, none, untouch };
 
-//StateTypes
-enum Types {
-    stand = 0,
-    crouch,
-    air,
-    liedown,
-    attack,
-    idle,
-    hit,
-    none,
-    untouch
-};
-
-
-//FlipFlags for air manager
-// ��ȡair�ļ�ʱ��ʹ��
-enum FlipFlag {
-    HFLIPFLAG = 1,
-    VFLIPFLAG = 2,
-    HVFLIPFLAG = 3
-};
-
+// FlipFlags for air manager
+//  ��ȡair�ļ�ʱ��ʹ��
+enum FlipFlag { HFLIPFLAG = 1, VFLIPFLAG = 2, HVFLIPFLAG = 3 };
 
 // ����ʱ���Լ���״̬
 enum HitDef_Attr_SelfType_Enum {
@@ -640,7 +610,6 @@ enum HitDef_Attr_LevelType_Enum {
 
 static char HitDef_Attr_LevelType[] = {'N', 'S', 'H'};
 
-
 // ��������
 enum HitDef_Attr_AtkType_Enum {
     HitDef_Attr_AtkType_Attack = 0,
@@ -650,9 +619,8 @@ enum HitDef_Attr_AtkType_Enum {
 
 static char HitDef_Attr_AtkType[] = {'A', 'T', 'P'};
 
-
 // constö��
-static char *strConstType[] = {
+static char* strConstType[] = {
     "Data.life",
     0,
 };
@@ -660,6 +628,5 @@ static char *strConstType[] = {
 enum ConstType_Enum {
     Const_Data_Life = 0,
 };
-
 
 #endif

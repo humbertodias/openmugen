@@ -8,8 +8,7 @@ all fighters are represented and the stages
 ================================================================================
 */
 
-CEngine::CEngine() {
-}
+CEngine::CEngine() {}
 
 CEngine::~CEngine() {
     delete m_pVMp1;
@@ -22,13 +21,13 @@ Init the engine call the function once at the start
 of OpenMugen
 ================================================================================
 */
-void CEngine::InitEngine(CMemManager *m, CVideoSystem *v, CGameTimer *t) {
-    //Set All pinter to CEngine class
-    m_pMemManager = m;
+void CEngine::InitEngine(CMemManager* m, CVideoSystem* v, CGameTimer* t) {
+    // Set All pinter to CEngine class
+    m_pMemManager  = m;
     m_pVideoSystem = v;
-    m_pTimer = t;
+    m_pTimer       = t;
 
-    //Set all needed pointer to need class by class player
+    // Set all needed pointer to need class by class player
     player1.SetPointers(v, m->GetAllocater(P1), t);
     strcpy(player1.myPlayerConst.PlayerData.szPlayerName, "player1");
     player2.SetPointers(v, m->GetAllocater(P2), t);
@@ -38,31 +37,29 @@ void CEngine::InitEngine(CMemManager *m, CVideoSystem *v, CGameTimer *t) {
     player4.SetPointers(v, m->GetAllocater(P4), t);
     strcpy(player4.myPlayerConst.PlayerData.szPlayerName, "player4");
 
-    //get the virtual machines
+    // get the virtual machines
     m_pVMp1 = new CVirtualMachine;
     m_pVMp2 = new CVirtualMachine;
 
-    //Set players to the VM
+    // Set players to the VM
     m_pVMp1->SetPlayers(&player1, &player2);
     m_pVMp2->SetPlayers(&player2, &player1);
 
-    //now set the VM to the player
+    // now set the VM to the player
     player1.SetVM(m_pVMp1);
     player2.SetVM(m_pVMp2);
-
 
     /*Set the ground limit of the player
      This value should be read out the stage def*/
     player1.SetGroundValue(220);
     player2.SetGroundValue(220);
 
-    //this values also should read out of the stage def
+    // this values also should read out of the stage def
     player1.SetPos(70, 220);
     player2.SetPos(240, 220);
 
     player1.LoadPlayer("");
     player2.LoadPlayer("");
-
 
     player1.SetKeyBoard(P1);
     player2.SetKeyBoard(P2);

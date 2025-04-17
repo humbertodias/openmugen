@@ -20,29 +20,26 @@
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
 #include "global.h"
 
-
-//Constructor
+// Constructor
 CGame::CGame() {
-    bError = false;
-    bGame = true;
+    bError     = false;
+    bGame      = true;
     nStartTime = nEndTime = 0;
-    nGameType = GFIGHTGAME;
+    nGameType             = GFIGHTGAME;
 }
 
-//Destructor
-CGame::~CGame() {
-}
+// Destructor
+CGame::~CGame() {}
 
-//Init the hole game
+// Init the hole game
 void CGame::InitGame() {
-    //First init the Log file system
+    // First init the Log file system
     InitLogFile();
-    //Now print Welcome Message
-    PrintMessage("Welcome to OpenMugen Version %s",VER);
-    //Now init SDL system
+    // Now print Welcome Message
+    PrintMessage("Welcome to OpenMugen Version %s", VER);
+    // Now init SDL system
     PrintMessage("CGame:Init SDL system");
 
     m_MemManager.InitManager();
@@ -52,62 +49,55 @@ void CGame::InitGame() {
         bError = true;
     }
 
-    //init timer
+    // init timer
     m_Timer.ResetTimer();
-    //init the main engine
-    m_FightEngine.InitEngine(&m_MemManager,
-                             m_SdlManager.GetVideoSystem(),
-                             &m_Timer);
-
+    // init the main engine
+    m_FightEngine.InitEngine(&m_MemManager, m_SdlManager.GetVideoSystem(), &m_Timer);
 
     m_MemManager.GetMemUsage();
 }
 
-//The main game Loop
+// The main game Loop
 void CGame::RunGame() {
     while (bGame) {
-        //Checks SDL system and Get Input
+        // Checks SDL system and Get Input
         CheckSDL();
-        //UpDateTimer;
+        // UpDateTimer;
         m_Timer.UpdateTimer();
-        //Clear the Screen
+        // Clear the Screen
         m_SdlManager.m_VideoSystem.Clear();
-        //switch to the current Subsystem
+        // switch to the current Subsystem
         switch (nGameType) {
-            //We are running the Fight engine
+            // We are running the Fight engine
             case GFIGHTGAME:
                 m_FightEngine.RunEngine();
                 break;
-            //We are in the menu screen
+            // We are in the menu screen
             case GMENU:
 
                 break;
         }
         //  m_SdlManager.m_VideoSystem.DrawText(10,20,"%i",m_Timer.GetGameTime());
-        //Now draw the content to the screen
+        // Now draw the content to the screen
         m_SdlManager.m_VideoSystem.Draw();
-        //Limits the game speed to 60Hz
+        // Limits the game speed to 60Hz
     }
 }
 
-
-//Checks the SDL event list
+// Checks the SDL event list
 void CGame::CheckSDL() {
     SDL_PollEvent(&event);
 
-    if (event.type == SDL_QUIT)
-        bGame = false;
+    if (event.type == SDL_QUIT) bGame = false;
 
-    if (event.key.keysym.sym == SDLK_ESCAPE)
-        bGame = false;
+    if (event.key.keysym.sym == SDLK_ESCAPE) bGame = false;
 }
 
-//Exit the game and cleans the memory and SDL
+// Exit the game and cleans the memory and SDL
 void CGame::Quit() {
     m_MemManager.FreeManager();
     m_SdlManager.CleanSDL();
     SDL_Quit();
 }
 
-void CGame::Crash() {
-}
+void CGame::Crash() {}

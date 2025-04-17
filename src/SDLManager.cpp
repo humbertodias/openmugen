@@ -22,19 +22,17 @@
 
 #include "global.h"
 
-//Destructor
-CSDLManager::~CSDLManager() {
-}
+// Destructor
+CSDLManager::~CSDLManager() {}
 
-//Constructor
-CSDLManager::CSDLManager() {
-}
+// Constructor
+CSDLManager::CSDLManager() {}
 
-//Init the SDL SUB systems
+// Init the SDL SUB systems
 bool CSDLManager::Init() {
     PrintMessage("CSDLManager:: Init()");
 
-    //Init SDL and the sub-systems of it(VIDEO, TIMER AND AUDIO SYSTEM)
+    // Init SDL and the sub-systems of it(VIDEO, TIMER AND AUDIO SYSTEM)
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
         PrintMessage("CSDLManager::SDL_Init Failed");
         PrintMessage("SDL error=%s", SDL_GetError());
@@ -42,7 +40,7 @@ bool CSDLManager::Init() {
     }
     PrintMessage("CSDLManager:: SDL_Init OK");
 
-    //Now init our Video System
+    // Now init our Video System
     if (!m_VideoSystem.InitSystem()) {
         PrintMessage("CSDLManager:: VideoSystem Init Failed");
         return false;
@@ -56,5 +54,5 @@ bool CSDLManager::Init() {
 void CSDLManager::CleanSDL() {
     PrintMessage("CSDLManager:: Cleaning SDL");
     m_VideoSystem.CleanUp();
-    //SDL_Quit();
+    // SDL_Quit();
 }

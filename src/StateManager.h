@@ -23,60 +23,59 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
-
-#define S_type					2
-#define S_movetype				4
-#define S_physics				8
-#define S_anime					10
-#define S_ctrl					12
-#define S_poweradd				14
-#define S_juggle				16
-#define S_hitdefpersist			18
-#define S_movehitpresist		20
-#define S_hitcountpresist		22
-#define S_sprprio				24
-#define S_facep2				26
+#define S_type 2
+#define S_movetype 4
+#define S_physics 8
+#define S_anime 10
+#define S_ctrl 12
+#define S_poweradd 14
+#define S_juggle 16
+#define S_hitdefpersist 18
+#define S_movehitpresist 20
+#define S_hitcountpresist 22
+#define S_sprprio 24
+#define S_facep2 26
 
 class CStateManager {
-    CAllocater *m_pAlloc;
+    CAllocater* m_pAlloc;
 
-public:
-    //Konstructor and Destructor
+   public:
+    // Konstructor and Destructor
     CStateManager();
 
     ~CStateManager();
 
-    void SetAlloc(CAllocater *a) { m_pAlloc = a; }
+    void SetAlloc(CAllocater* a) { m_pAlloc = a; }
 
     void AddStateDef(s32 nStateDefNum);
 
-    void AddState(s32 nStateNum, char *strSomeNumber);
+    void AddState(s32 nStateNum, char* strSomeNumber);
 
     void AddTriggerToState(u8 nType);
 
     void AddTypeToState(u16 nType);
 
-    void AddInstruction(Uint16 nOpCode, float value, const char *strValue);
+    void AddInstruction(Uint16 nOpCode, float value, const char* strValue);
 
     void ExchangeIns();
 
-    void *GetController();
+    void* GetController();
 
     void CleanUp();
 
-    INSTRUCTION *GetInst() { return pInst; }
-    int GetHowManyInst() { return nCurrInst; }
+    INSTRUCTION* GetInst() { return pInst; }
+    int          GetHowManyInst() { return nCurrInst; }
 
-    //search a State
-    PLSTATEDEF *GetStateDef(int nStateNumber);
+    // search a State
+    PLSTATEDEF* GetStateDef(int nStateNumber);
 
-    PLSTATEDEF *GetCurrStateDef();
+    PLSTATEDEF* GetCurrStateDef();
 
     void ReallocStatedef(u16 index);
 
     void ReallocManager();
 
-    //SetFuction
+    // SetFuction
     void SetStateDefType(u8 nType);
 
     void SetStateMoveType(u8 nType);
@@ -120,18 +119,18 @@ public:
 
     bool IsStateDefAviable(s32 nStateDefNum);
 
-private:
+   private:
     INSTRUCTION pInst[200];
-    PLSTATEDEF *lpStateDefList;
-    u16 nTotalStateDef;
-    u16 nTotalStateDefSize;
-    u16 nTotalState;
-    u16 nTotalStateSize;
-    u16 nCurrTrigger;
-    u16 nTriggerListSize;
-    u16 nCurrInst;
-    u16 nCurrParamInst;
-    u16 nCurrParam;
+    PLSTATEDEF* lpStateDefList;
+    u16         nTotalStateDef;
+    u16         nTotalStateDefSize;
+    u16         nTotalState;
+    u16         nTotalStateSize;
+    u16         nCurrTrigger;
+    u16         nTriggerListSize;
+    u16         nCurrInst;
+    u16         nCurrParamInst;
+    u16         nCurrParam;
 
     bool bParam;
 };

@@ -23,16 +23,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+enum { GMENU = 1, GFIGHTGAME };
 
-enum {
-    GMENU = 1,
-    GFIGHTGAME
-};
-
-//This is the main game class 
+// This is the main game class
 class CGame {
-public:
-    //Constructor Destructor
+   public:
+    // Constructor Destructor
     CGame();
 
     ~CGame();
@@ -43,27 +39,25 @@ public:
 
     void Quit();
 
-
     // private:
-public:
+   public:
     void Crash();
 
     void CheckSDL();
 
-    //Needed Variables
+    // Needed Variables
     CSDLManager m_SdlManager;
     CMemManager m_MemManager;
-    CGameTimer m_Timer;
-    CEngine m_FightEngine;
+    CGameTimer  m_Timer;
+    CEngine     m_FightEngine;
 
-    bool bError;
-    bool bGame;
+    bool  bError;
+    bool  bGame;
     float nStartTime, nEndTime;
-    u16 nGameType;
+    u16   nGameType;
     float nFrameRate;
-    //for event handling
+    // for event handling
     SDL_Event event;
 };
-
 
 #endif

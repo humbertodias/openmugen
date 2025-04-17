@@ -49,3 +49,6 @@ ci:
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/OpenMugen
+
+format:
+	find src -name "*.cpp" -o -name "*.h" | xargs clang-format -i

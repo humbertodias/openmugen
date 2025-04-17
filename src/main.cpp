@@ -1,12 +1,11 @@
 #include "global.h"
 
-
-//Main object of the game
+// Main object of the game
 CGame mugen;
 
-//only for VC compiler 
+// only for VC compiler
 #ifdef WIN32
-//only include this when compiling for windows
+// only include this when compiling for windows
 #include "windows.h"
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
@@ -22,14 +21,12 @@ CGame mugen;
 #endif
 
 #ifdef __EMSCRIPTEN__
-void RunOneFrame()
-{
+void RunOneFrame() {
     mugen.CheckSDL();
     mugen.m_Timer.UpdateTimer();
     mugen.m_SdlManager.m_VideoSystem.Clear();
 
-    switch (mugen.nGameType)
-    {
+    switch (mugen.nGameType) {
         case GFIGHTGAME:
             mugen.m_FightEngine.RunEngine();
             break;
@@ -40,8 +37,7 @@ void RunOneFrame()
 
     mugen.m_SdlManager.m_VideoSystem.Draw();
 
-    if (!mugen.bGame)
-    {
+    if (!mugen.bGame) {
         emscripten_cancel_main_loop();
         mugen.Quit();
     }
@@ -50,7 +46,7 @@ void RunOneFrame()
 
 char globalStr[1024];
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     try {
         mugen.InitGame();
 
@@ -61,9 +57,9 @@ int main(int argc, char **argv) {
         mugen.Quit();
 #endif
         mugen.Quit();
-    } catch (CError &e) {
+    } catch (CError& e) {
         mugen.Quit();
-        //windows only , change this for other OS
+        // windows only , change this for other OS
     }
 
     return 0;

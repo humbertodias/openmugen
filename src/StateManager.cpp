@@ -22,10 +22,8 @@
 
 #include "global.h"
 
-
-//OP_CODE table
-char *strOpCode[] =
-{
+// OP_CODE table
+char* strOpCode[] = {
     "OP_PUSH",
     "OP_POP",
     "OP_ADD",
@@ -168,48 +166,44 @@ char *strOpCode[] =
     "OP_MOD",
     "OP_NOP",
 
-
 };
-//Constructor
-CStateManager::CStateManager() {
-}
+// Constructor
+CStateManager::CStateManager() {}
 
-//Destructor
-CStateManager::~CStateManager() {
-}
+// Destructor
+CStateManager::~CStateManager() {}
 
-//restet after clean up
+// restet after clean up
 void CStateManager::Reset() {
-    nTotalStateDef = 0;
+    nTotalStateDef     = 0;
     nTotalStateDefSize = 100;
-    nCurrInst = 0;
-    lpStateDefList = (PLSTATEDEF *) m_pAlloc->Alloc(sizeof(PLSTATEDEF) * nTotalStateDefSize);
-    nCurrTrigger = 0;
+    nCurrInst          = 0;
+    lpStateDefList     = (PLSTATEDEF*)m_pAlloc->Alloc(sizeof(PLSTATEDEF) * nTotalStateDefSize);
+    nCurrTrigger       = 0;
 }
 
 void CStateManager::ReallocStatedef(u16 index) {
-    lpStateDefList[index].lpState = (PLSTATE *) m_pAlloc->Realloc(lpStateDefList[index].lpState,
-                                                                  sizeof(PLSTATE) * lpStateDefList[index].
-                                                                  nHowManyState);
+    lpStateDefList[index].lpState = (PLSTATE*)m_pAlloc->Realloc(lpStateDefList[index].lpState,
+                                                                sizeof(PLSTATE) * lpStateDefList[index].nHowManyState);
 
     for (int i = 0; i < lpStateDefList[index].nHowManyState; i++) {
-        lpStateDefList[index].lpState[i].triggers = (PLTRIGGER *) m_pAlloc->Realloc(
-            lpStateDefList[index].lpState[i].triggers,
-            sizeof(PLTRIGGER) * lpStateDefList[index].lpState[i].nHowManyTriggers);
+        lpStateDefList[index].lpState[i].triggers =
+            (PLTRIGGER*)m_pAlloc->Realloc(lpStateDefList[index].lpState[i].triggers,
+                                          sizeof(PLTRIGGER) * lpStateDefList[index].lpState[i].nHowManyTriggers);
     }
 }
 
-//frees unused memory
+// frees unused memory
 void CStateManager::ReallocManager() {
     ReallocStatedef(nTotalStateDef - 1);
 
-    lpStateDefList = (PLSTATEDEF *) m_pAlloc->Realloc(lpStateDefList, sizeof(PLSTATEDEF) * nTotalStateDef);
+    lpStateDefList = (PLSTATEDEF*)m_pAlloc->Realloc(lpStateDefList, sizeof(PLSTATEDEF) * nTotalStateDef);
 }
 
 bool CStateManager::IsStateDefAviable(s32 nStateDefNum) {
     for (s32 i = 0; i < nTotalStateDef; i++) {
         if (lpStateDefList[i].StateNumber == nStateDefNum) {
-            //make this state invalide to overwrite it
+            // make this state invalide to overwrite it
             lpStateDefList[i].StateNumber = -11;
             return true;
         }
@@ -217,31 +211,29 @@ bool CStateManager::IsStateDefAviable(s32 nStateDefNum) {
     return false;
 }
 
-//Add a new statedef in the list
+// Add a new statedef in the list
 void CStateManager::AddStateDef(s32 nStateDefNum) {
     //    PrintMessage("AddStateDef %i",nStateDefNum);
 
-    if (IsStateDefAviable(nStateDefNum))
-        PrintMessage("Overwriting StateDef %i", nStateDefNum);
+    if (IsStateDefAviable(nStateDefNum)) PrintMessage("Overwriting StateDef %i", nStateDefNum);
 
-    if (nTotalStateDef != 0)
-        ReallocStatedef(nTotalStateDef - 1);
+    if (nTotalStateDef != 0) ReallocStatedef(nTotalStateDef - 1);
 
     if (nTotalStateDef > nTotalStateDefSize - 1) {
         nTotalStateDefSize += 100;
-        lpStateDefList = (PLSTATEDEF *) m_pAlloc->Realloc(lpStateDefList, sizeof(PLSTATEDEF) * nTotalStateDefSize);
+        lpStateDefList = (PLSTATEDEF*)m_pAlloc->Realloc(lpStateDefList, sizeof(PLSTATEDEF) * nTotalStateDefSize);
     }
 
     lpStateDefList[nTotalStateDef].StateNumber = nStateDefNum;
 
     nTotalState = 0;
 
-    nTotalStateSize = 100;
-    lpStateDefList[nTotalStateDef].lpState = (PLSTATE *) m_pAlloc->Alloc(sizeof(PLSTATE) * nTotalStateSize);
+    nTotalStateSize                        = 100;
+    lpStateDefList[nTotalStateDef].lpState = (PLSTATE*)m_pAlloc->Alloc(sizeof(PLSTATE) * nTotalStateSize);
 
     nTotalStateDef++;
 
-    //Set default values
+    // Set default values
     SetDefaultStatedef();
 }
 
@@ -257,21 +249,21 @@ void CStateManager::SetStatePhysicType(u8 nType) {
     lpStateDefList[nTotalStateDef - 1].physics = nType;
 }
 
-//Sets default values to the Statedef
+// Sets default values to the Statedef
 void CStateManager::SetDefaultStatedef() {
-    lpStateDefList[nTotalStateDef - 1].type = stand;
-    lpStateDefList[nTotalStateDef - 1].movetype = idle;
-    lpStateDefList[nTotalStateDef - 1].physics = none;
-    lpStateDefList[nTotalStateDef - 1].nAnim = -1;
-    lpStateDefList[nTotalStateDef - 1].Velset.x = -3333;
-    lpStateDefList[nTotalStateDef - 1].Velset.y = -3333;
-    lpStateDefList[nTotalStateDef - 1].bCtrl = -1;
-    lpStateDefList[nTotalStateDef - 1].nPoweradd = -3333;
-    lpStateDefList[nTotalStateDef - 1].bFacep2 = false;
-    lpStateDefList[nTotalStateDef - 1].nJuggle = -3333;
-    lpStateDefList[nTotalStateDef - 1].bHitdefpersist = false;
+    lpStateDefList[nTotalStateDef - 1].type             = stand;
+    lpStateDefList[nTotalStateDef - 1].movetype         = idle;
+    lpStateDefList[nTotalStateDef - 1].physics          = none;
+    lpStateDefList[nTotalStateDef - 1].nAnim            = -1;
+    lpStateDefList[nTotalStateDef - 1].Velset.x         = -3333;
+    lpStateDefList[nTotalStateDef - 1].Velset.y         = -3333;
+    lpStateDefList[nTotalStateDef - 1].bCtrl            = -1;
+    lpStateDefList[nTotalStateDef - 1].nPoweradd        = -3333;
+    lpStateDefList[nTotalStateDef - 1].bFacep2          = false;
+    lpStateDefList[nTotalStateDef - 1].nJuggle          = -3333;
+    lpStateDefList[nTotalStateDef - 1].bHitdefpersist   = false;
     lpStateDefList[nTotalStateDef - 1].bHitcountpersist = false;
-    lpStateDefList[nTotalStateDef - 1].nSprpriority = 255;
+    lpStateDefList[nTotalStateDef - 1].nSprpriority     = 255;
 }
 
 void CStateManager::SetStateAnim(s32 nAnim) {
@@ -315,25 +307,24 @@ void CStateManager::SetVelSet(float x, float y) {
     lpStateDefList[nTotalStateDef - 1].Velset.y = y;
 }
 
-//Add a State tothe current Statedef
-void CStateManager::AddState(s32 nStateNum, char *strSomeNumber) {
+// Add a State tothe current Statedef
+void CStateManager::AddState(s32 nStateNum, char* strSomeNumber) {
     PrintMessage("Add state %i, %s", nStateNum, strSomeNumber);
-    PLSTATE *curState = NULL;
+    PLSTATE* curState = NULL;
     if (nTotalState > nTotalStateSize - 1) {
         nTotalStateSize += 100;
 
-        lpStateDefList[nTotalStateDef - 1].lpState = (PLSTATE *) m_pAlloc->Realloc(
-            lpStateDefList[nTotalStateDef].lpState,
-            sizeof(PLSTATE) * nTotalStateSize);
+        lpStateDefList[nTotalStateDef - 1].lpState =
+            (PLSTATE*)m_pAlloc->Realloc(lpStateDefList[nTotalStateDef].lpState, sizeof(PLSTATE) * nTotalStateSize);
     }
 
     lpStateDefList[nTotalStateDef - 1].lpState[nTotalState].nStateNumber = nStateNum;
-    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState].nParamCount = 0;
-    nCurrTrigger = 0;
-    nTriggerListSize = 100;
+    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState].nParamCount  = 0;
+    nCurrTrigger                                                         = 0;
+    nTriggerListSize                                                     = 100;
 
-    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState].triggers = (PLTRIGGER *) m_pAlloc->Alloc(
-        sizeof(PLTRIGGER) * nTriggerListSize);
+    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState].triggers =
+        (PLTRIGGER*)m_pAlloc->Alloc(sizeof(PLTRIGGER) * nTriggerListSize);
 
     nTotalState++;
     lpStateDefList[nTotalStateDef - 1].nHowManyState = nTotalState;
@@ -341,34 +332,33 @@ void CStateManager::AddState(s32 nStateNum, char *strSomeNumber) {
     nCurrInst = 0;
 }
 
-//Now save the controller type wich would be executeted
+// Now save the controller type wich would be executeted
 void CStateManager::AddTypeToState(u16 nType) {
     lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].nType = nType;
 }
 
-PLSTATEDEF *CStateManager::GetCurrStateDef() {
+PLSTATEDEF* CStateManager::GetCurrStateDef() {
     return &lpStateDefList[nTotalStateDef - 1];
 }
 
-void *CStateManager::GetController() {
+void* CStateManager::GetController() {
     return NULL;
     //	return lpCurrent->lpController;
 }
 
-//Cleans up ;-)
-void CStateManager::CleanUp() {
-}
+// Cleans up ;-)
+void CStateManager::CleanUp() {}
 
-//Add Instruction to currrent trigger
-void CStateManager::AddInstruction(Uint16 nOpCode, float value, const char *strValue) {
+// Add Instruction to currrent trigger
+void CStateManager::AddInstruction(Uint16 nOpCode, float value, const char* strValue) {
     // TODO: Review global-overflow
     // PrintMessage("AddInstruction = command:%s value:%f str:%s",strOpCode[nOpCode],value,(char *)strValue,nOpCode);
 
     pInst[nCurrInst].n_OpCode = nOpCode;
-    pInst[nCurrInst].Value = value;
+    pInst[nCurrInst].Value    = value;
     pInst[nCurrInst].strValue = NULL;
 
-    //only add a string if we need one
+    // only add a string if we need one
     if (strValue[0] != '#') {
         pInst[nCurrInst].strValue = new char[strlen(strValue) + 1];
         strcpy(pInst[nCurrInst].strValue, strValue);
@@ -377,20 +367,20 @@ void CStateManager::AddInstruction(Uint16 nOpCode, float value, const char *strV
     nCurrInst++;
 }
 
-//Increase the index of the current trigger ref
+// Increase the index of the current trigger ref
 void CStateManager::AddTriggerToState(u8 nType) {
     if (nCurrTrigger > nTriggerListSize)
         PrintMessage("CStateManager::What the hell are you doing with 100 triggers!!!!(Error)");
 
-    //First lets copy the instruction to the trigger
-    //Create a new instance to store the instruction
+    // First lets copy the instruction to the trigger
+    // Create a new instance to store the instruction
 
     lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].triggers[nCurrTrigger].nTriggerType = nType;
-    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].triggers[nCurrTrigger].pInts = (INSTRUCTION *) m_pAlloc
-            ->Alloc(sizeof(INSTRUCTION) * nCurrInst);
+    lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].triggers[nCurrTrigger].pInts =
+        (INSTRUCTION*)m_pAlloc->Alloc(sizeof(INSTRUCTION) * nCurrInst);
 
-    memcpy(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].triggers[nCurrTrigger].pInts,
-           pInst, sizeof(INSTRUCTION) * nCurrInst);
+    memcpy(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1].triggers[nCurrTrigger].pInts, pInst,
+           sizeof(INSTRUCTION) * nCurrInst);
 
     nCurrTrigger++;
 
@@ -399,25 +389,24 @@ void CStateManager::AddTriggerToState(u8 nType) {
     nCurrInst = 0;
 }
 
-
-//set the param value
+// set the param value
 void CStateManager::SetParam(ConParmName nParam) {
     // PrintMessage("%i param",nParam);
     // ��ӽ���
     this->AddInstruction(OP_STOP, 0, "OP_STOP");
-    PLSTATE *curState = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
+    PLSTATE* curState                                = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
     curState->pConParm[curState->nParamCount].nParam = nParam;
     // ��ǰ��exprcopy��pararm����
     memcpy(curState->pConParm[curState->nParamCount].pInts, pInst, sizeof(INSTRUCTION) * nCurrInst);
     curState->nParamCount++;
 }
 
-//set the HITDEF param value
+// set the HITDEF param value
 void CStateManager::SetHDParam(CONTROLHITDEFParmName nParam) {
     // PrintMessage("%i param",nParam);
     // ��ӽ���
     this->AddInstruction(OP_STOP, 0, "OP_STOP");
-    PLSTATE *curState = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
+    PLSTATE* curState = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
     curState->pConHDParm[curState->nParamHDCount].nParam = nParam;
     // ��ǰ��exprcopy��pararm����
     memcpy(curState->pConHDParm[curState->nParamHDCount].pInts, pInst, sizeof(INSTRUCTION) * nCurrInst);
@@ -425,20 +414,19 @@ void CStateManager::SetHDParam(CONTROLHITDEFParmName nParam) {
 }
 
 void CStateManager::SetPersistent() {
-    PLSTATE *curState = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
+    PLSTATE* curState  = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
     curState->bPresist = 1;
 }
 
 void CStateManager::SetIgnorehitpause() {
-    PLSTATE *curState = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
+    PLSTATE* curState     = &(lpStateDefList[nTotalStateDef - 1].lpState[nTotalState - 1]);
     curState->bIgnorPause = 1;
 }
 
-//search for the given state and return it
-PLSTATEDEF *CStateManager::GetStateDef(int nStateNumber) {
+// search for the given state and return it
+PLSTATEDEF* CStateManager::GetStateDef(int nStateNumber) {
     for (u16 i = 0; i < nTotalStateDef; i++) {
-        if (lpStateDefList[i].StateNumber == nStateNumber)
-            return &lpStateDefList[i];
+        if (lpStateDefList[i].StateNumber == nStateNumber) return &lpStateDefList[i];
     }
     PrintMessage("CStateManager::Statedef %i not found", nStateNumber);
     return 0;

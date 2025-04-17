@@ -21,28 +21,27 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "global.h"
 
-//Constructor
+// Constructor
 CControllerExecuter::CControllerExecuter() {
-    //init ouer function table
+    // init ouer function table
     InitFuncTable();
 }
 
-//Destructor
-CControllerExecuter::~CControllerExecuter() {
-}
+// Destructor
+CControllerExecuter::~CControllerExecuter() {}
 
-//Inits the Function Table
+// Inits the Function Table
 void CControllerExecuter::InitFuncTable() {
-    pFuncTable[0] = &CControllerExecuter::NullController;
-    pFuncTable[1] = NULL;
-    pFuncTable[2] = NULL;
-    pFuncTable[3] = NULL;
-    pFuncTable[4] = NULL;
-    pFuncTable[5] = NULL;
-    pFuncTable[6] = NULL;
-    pFuncTable[7] = NULL;
-    pFuncTable[8] = NULL;
-    pFuncTable[9] = NULL;
+    pFuncTable[0]  = &CControllerExecuter::NullController;
+    pFuncTable[1]  = NULL;
+    pFuncTable[2]  = NULL;
+    pFuncTable[3]  = NULL;
+    pFuncTable[4]  = NULL;
+    pFuncTable[5]  = NULL;
+    pFuncTable[6]  = NULL;
+    pFuncTable[7]  = NULL;
+    pFuncTable[8]  = NULL;
+    pFuncTable[9]  = NULL;
     pFuncTable[10] = NULL;
     pFuncTable[11] = NULL;
     pFuncTable[12] = NULL;
@@ -123,20 +122,18 @@ void CControllerExecuter::InitFuncTable() {
     pFuncTable[87] = NULL;
 }
 
-//NUll Controller does nothing ;-)
-void CControllerExecuter::NullController() {
-}
+// NUll Controller does nothing ;-)
+void CControllerExecuter::NullController() {}
 
-
-//executes the controller
+// executes the controller
 void CControllerExecuter::ExecuteController(int nController) {
 #ifdef DEBUG
-    PrintMessage("Execute controller %i",nController-TNULL);
+    PrintMessage("Execute controller %i", nController - TNULL);
 #endif
     //   (this->*pFuncTable[nController-TNULL])();
 }
 
-//ChangeState Controller
+// ChangeState Controller
 void CControllerExecuter::ChangeState() {
     /* int nStateToChange;
      //Get the Statenumber to wich it will be changed
@@ -144,11 +141,10 @@ void CControllerExecuter::ChangeState() {
      ((CPlayer*)lpPlayer)->ChangeState(nStateToChange);*/
 }
 
-//Change Anim controller
-void CControllerExecuter::ChangeAnim() {
-}
+// Change Anim controller
+void CControllerExecuter::ChangeAnim() {}
 
-//VelSet controller
+// VelSet controller
 void CControllerExecuter::VelSet() {
     /*    float x=((CPlayer*)lpPlayer)->GetParamValue(PA_XVALUE);
         float y=((CPlayer*)lpPlayer)->GetParamValue(PA_YVALUE);
@@ -164,7 +160,7 @@ void CControllerExecuter::VelSet() {
     */
 }
 
-//VarSet Controller
+// VarSet Controller
 void CControllerExecuter::VarSet() {
     /*float fVarValue=0;
     int index=0;

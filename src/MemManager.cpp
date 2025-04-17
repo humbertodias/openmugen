@@ -1,29 +1,26 @@
 #include "global.h"
 
-CAllocater::CAllocater(char *strName) {
-    //copy the name
+CAllocater::CAllocater(char* strName) {
+    // copy the name
     strcpy(strAllocName, strName);
     nAllocSize = 0;
-    lpMemList = NULL;
+    lpMemList  = NULL;
 }
 
-CAllocater::~CAllocater() {
-}
+CAllocater::~CAllocater() {}
 
-void CAllocater::SetMemListFree(MEMLIST *lpList) {
+void CAllocater::SetMemListFree(MEMLIST* lpList) {
     memset(lpList, 0, sizeof(MEMLIST) * 100);
 }
 
-
 void CAllocater::ResetAllocater() {
-    nAllocSize = 0;
+    nAllocSize   = 0;
     nAllocNumber = 0;
     nMemListSize = 100;
-    bFree = true;
-    lpMemList = (MEMLIST *) malloc(sizeof(MEMLIST) * nMemListSize);
+    bFree        = true;
+    lpMemList    = (MEMLIST*)malloc(sizeof(MEMLIST) * nMemListSize);
     SetMemListFree(lpMemList);
 }
-
 
 void CAllocater::ShowMemUsage() {
     PrintMessage("---Memory usage of %s allocater", strAllocName);
@@ -33,34 +30,30 @@ void CAllocater::ShowMemUsage() {
     PrintMessage("");
 }
 
-//Allocate memory and save its address in a list
-void *CAllocater::Alloc(size_t nSize, int nMemInit) {
-    if (bFree)
-        bFree = false;
+// Allocate memory and save its address in a list
+void* CAllocater::Alloc(size_t nSize, int nMemInit) {
+    if (bFree) bFree = false;
 
-    //if we have more allocation as we can hold in our list then grow our list
+    // if we have more allocation as we can hold in our list then grow our list
     if (nAllocNumber > nMemListSize - 1) {
-        //grow the list by 100
+        // grow the list by 100
         nMemListSize += 100;
-        lpMemList = (MEMLIST *) realloc(lpMemList, sizeof(MEMLIST) * nMemListSize);
-        //set memlist empty
+        lpMemList = (MEMLIST*)realloc(lpMemList, sizeof(MEMLIST) * nMemListSize);
+        // set memlist empty
         SetMemListFree(&lpMemList[nMemListSize - 100]);
     }
 
-
     u32 i;
-    //search the list for a free place to hold the address
+    // search the list for a free place to hold the address
     for (i = 0; i < nMemListSize; i++)
         if (lpMemList[i].nType == FREE) break;
 
-    if (i > nMemListSize)
-        PrintMessage("CAllocater::no free block found");
+    if (i > nMemListSize) PrintMessage("CAllocater::no free block found");
 
-    lpMemList[i].nType = ALLOC;
+    lpMemList[i].nType   = ALLOC;
     lpMemList[i].adrress = malloc(nSize);
 
-    if (lpMemList[i].adrress == 0)
-        PrintMessage("CAllocater::malloc failed");
+    if (lpMemList[i].adrress == 0) PrintMessage("CAllocater::malloc failed");
     memset(lpMemList[i].adrress, 0, nSize);
     lpMemList[i].nSize = nSize;
 
@@ -70,9 +63,9 @@ void *CAllocater::Alloc(size_t nSize, int nMemInit) {
     return lpMemList[i].adrress;
 }
 
-//reallocate the given memory block and save the new address in the list
-void *CAllocater::Realloc(void *CurMem, size_t nSize) {
-    u32 i;
+// reallocate the given memory block and save the new address in the list
+void* CAllocater::Realloc(void* CurMem, size_t nSize) {
+    u32  i;
     bool bFound = false;
 
     for (i = 0; i < nMemListSize; i++) {
@@ -82,22 +75,20 @@ void *CAllocater::Realloc(void *CurMem, size_t nSize) {
         }
     }
 
-    if (!bFound)
-        PrintMessage("Realloc failed %x was never allocated", CurMem);
+    if (!bFound) PrintMessage("Realloc failed %x was never allocated", CurMem);
 
     nAllocSize -= lpMemList[i].nSize;
 
     lpMemList[i].adrress = realloc(lpMemList[i].adrress, nSize);
-    lpMemList[i].nSize = nSize;
+    lpMemList[i].nSize   = nSize;
     nAllocSize += nSize;
-
 
     return lpMemList[i].adrress;
 }
 
-//search the list for the allocated block and free it from memory
-void CAllocater::Free(void *CurMem) {
-    u32 i;
+// search the list for the allocated block and free it from memory
+void CAllocater::Free(void* CurMem) {
+    u32  i;
     bool bFound = false;
 
     for (i = 0; i < nMemListSize; i++) {
@@ -107,56 +98,52 @@ void CAllocater::Free(void *CurMem) {
         }
     }
 
-    if (!bFound)
-        PrintMessage("free failed %x was never allocated", CurMem);
+    if (!bFound) PrintMessage("free failed %x was never allocated", CurMem);
 
     free(lpMemList[i].adrress);
     lpMemList[i].adrress = 0;
-    lpMemList[i].nType = FREE;
+    lpMemList[i].nType   = FREE;
     nAllocSize -= lpMemList[i].nSize;
 
     nAllocNumber--;
 }
 
-
-//Free all allocated memory
+// Free all allocated memory
 void CAllocater::FreeAllocater() {
     if (!bFree) {
         for (u32 i = 0; i < nMemListSize; i++) {
-            if(lpMemList[i].nType==ALLOC) Free(lpMemList[i].adrress);
+            if (lpMemList[i].nType == ALLOC) Free(lpMemList[i].adrress);
         }
     }
     // PrintMessage("CAllocater::%s unfreed %i bytes",strAllocName,nAllocSize);
-    //clear our memlist
+    // clear our memlist
     if (lpMemList != NULL) {
         free(lpMemList);
     }
 }
 
-//the MemManager with the included allocators
-CMemManager::CMemManager() {
-}
+// the MemManager with the included allocators
+CMemManager::CMemManager() {}
 
-CMemManager::~CMemManager() {
-}
+CMemManager::~CMemManager() {}
 
 void CMemManager::InitManager() {
     lpAlloc[MAINMENU] = new CAllocater("Main Menu");
-    lpAlloc[STAGE] = new CAllocater("Stage");
-    lpAlloc[ENGINE] = new CAllocater("Engine");
-    lpAlloc[P1] = new CAllocater("Player 1");
-    lpAlloc[P2] = new CAllocater("Player 2");
-    lpAlloc[P3] = new CAllocater("Player 3");
-    lpAlloc[P4] = new CAllocater("Player 4");
+    lpAlloc[STAGE]    = new CAllocater("Stage");
+    lpAlloc[ENGINE]   = new CAllocater("Engine");
+    lpAlloc[P1]       = new CAllocater("Player 1");
+    lpAlloc[P2]       = new CAllocater("Player 2");
+    lpAlloc[P3]       = new CAllocater("Player 3");
+    lpAlloc[P4]       = new CAllocater("Player 4");
 
     PrintMessage("Init Memory Manager");
 }
 
-CAllocater *CMemManager::GetAllocater(int nAllocater) {
+CAllocater* CMemManager::GetAllocater(int nAllocater) {
     return lpAlloc[nAllocater];
 }
 
-//free all the allocators from mem
+// free all the allocators from mem
 void CMemManager::FreeManager() {
     for (int i = 0; i < 7; i++) {
         lpAlloc[i]->FreeAllocater();
@@ -164,7 +151,7 @@ void CMemManager::FreeManager() {
     }
 }
 
-//show and return the memusage
+// show and return the memusage
 size_t CMemManager::GetMemUsage() {
     size_t nMem = 0;
 
