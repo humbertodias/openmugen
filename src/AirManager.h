@@ -23,43 +23,46 @@
 #ifndef _AIRMANAGER_H_
 #define _AIRMANAGER_H_
 
+class CAirManager {
+    ActionElement* lpActionList;
+    CAllocater*    m_pAlloc;
+    u16            nTotalActionBlock;
+    u16            nActionListSize;
+    u16            nAnimTime;
+    u16            nTotalElement;
+    u16            nElementListSize;
+    u16            nTotalCns;
+    u16            nCnsListSize;
+    bool           bDefaultClsn;
+    bool           bIsClsn1;
+    Clsn           pClsn[200];
 
-class CAirManager
-{
-ActionElement *lpActionList;
-CAllocater    *m_pAlloc;      
-u16           nTotalActionBlock;
-u16           nActionListSize;
-u16           nAnimTime;
-u16           nTotalElement;
-u16           nElementListSize;
-u16           nTotalCns;
-u16           nCnsListSize;
-bool          bDefaultClsn;
-bool          bIsClsn1;
-Clsn          pClsn[200];
-public:
-	CAirManager();
-	~CAirManager();
+   public:
+    CAirManager();
 
-public:
-   void SetAlloc(CAllocater* a){m_pAlloc=a;}
-   void AddAction(s32 nActionNumber);
-   void AddElement(s16 nGroupNumber,s16 nImageNumber,s16 x,s16 y,s16 nDuringTime,u16 nFlip,u32 nColorFlag);
-   void SetLoop();
-   void AddClsnBox(s16 x,s16 y,s16 w,s16 h,int nNumberOfClsn);
-   void CreateClsnBox(u16 nNumberOfClsn,bool bClsn1,bool bDefault);
-   void OpenAir(char *strFileName);
-   ActionElement* GetAction(s32 nActionNumber);
-   void CleanUp();
-   void RealocateActionBlock();
-   void ResetManager();
+    ~CAirManager();
 
+   public:
+    void SetAlloc(CAllocater* a) { m_pAlloc = a; }
 
+    void AddAction(s32 nActionNumber);
 
-	
+    void AddElement(s16 nGroupNumber, s16 nImageNumber, s16 x, s16 y, s16 nDuringTime, u16 nFlip, u32 nColorFlag);
 
+    void SetLoop();
 
+    void AddClsnBox(s16 x, s16 y, s16 w, s16 h, int nNumberOfClsn);
 
+    void CreateClsnBox(u16 nNumberOfClsn, bool bClsn1, bool bDefault);
+
+    void OpenAir(char* strFileName);
+
+    ActionElement* GetAction(s32 nActionNumber);
+
+    void CleanUp();
+
+    void RealocateActionBlock();
+
+    void ResetManager();
 };
 #endif

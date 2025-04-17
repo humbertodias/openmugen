@@ -22,31 +22,26 @@
 
 #include "global.h"
 
-void scale2x(SDL_Surface *src, SDL_Surface *dst);
+void scale2x(SDL_Surface* src, SDL_Surface* dst);
 
-//Konstructor
+// Konstructor
 CVideoSystem::CVideoSystem() {
-    // work=screen=NULL;
-    work = NULL;
-    window = NULL;
+    work     = NULL;
+    window   = NULL;
     renderer = NULL;
-    texture = NULL;
+    texture  = NULL;
 
     nowTime = lastTime = 0;
-    nFpsCount = 0;
+    nFpsCount          = 0;
 }
 
-//Destructor
+// Destructor
 CVideoSystem::~CVideoSystem() {
     PrintMessage("CVideoSystem::~CVideoSystem() Cleaning Up");
     CleanUp();
 }
 
 void CVideoSystem::CleanUp() {
-    // SDL_FreeSurface(work);
-    // SDL_FreeSurface(screen);
-    // SDL_FreeSurface(font);
-
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(font);
     SDL_FreeSurface(work);
@@ -56,40 +51,35 @@ void CVideoSystem::CleanUp() {
 
 bool CVideoSystem::InitSystem() {
     PrintMessage("CVideoSystem::InitSystem()");
-    //Set Video mode and get main Surface
-    // screen=SDL_SetVideoMode(320,240,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
-    window = SDL_CreateWindow(OMTITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240,
-                              SDL_SWSURFACE | SDL_WINDOW_SHOWN);
+    window   = SDL_CreateWindow(OMTITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240,
+                                SDL_SWSURFACE | SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    //Check the surface for validate
+    // Check the surface for validate
     if (window == NULL) {
         throw(CError("SDL_SetVideoMode Failed"));
         return false;
     }
-    //OpenMugen Title
-    // SDL_WM_SetCaption(OMTITLE,NULL);
     SDL_SetWindowTitle(window, OMTITLE);
 
     // Load the icon image as an SDL_Surface
-    SDL_Surface *icon = SDL_LoadBMP("data/icon.bmp");
+    SDL_Surface* icon = SDL_LoadBMP("data/icon.bmp");
     if (icon == NULL) {
         PrintMessage("SDL_LoadBMP failed: %s", SDL_GetError());
         return false;
     }
 
     // Set the window icon
-    SDL_SetWindowIcon(window, icon); // 'window' is your SDL_Window*
+    SDL_SetWindowIcon(window, icon);
 
     // Free the icon surface after setting the icon
     SDL_FreeSurface(icon);
 
-    //Create the work surface
-    work = CreateSurface(320, 240);
-    // SDL_FillRect(work,NULL,SDL_MapRGB(screen->format,255,0,255));
+    // Create the work surface
+    work = CreateSurface(XMAX, YMAX);
 
     // Create a rectangle for the work surface (320x240)
-    SDL_Rect workRect = {0, 0, 320, 240}; // Defining the area to fill
+    SDL_Rect workRect = {0, 0, XMAX, YMAX};  // Defining the area to fill
 
     // Set the draw color to magenta (RGB: 255, 0, 255, A: 255 for full opacity)
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
@@ -100,42 +90,34 @@ bool CVideoSystem::InitSystem() {
     // Present the renderer (update the window to show the changes)
     SDL_RenderPresent(renderer);
 
-
-    texture = SDL_CreateTexture(renderer,
-                            SDL_PIXELFORMAT_RGB565,
-                            SDL_TEXTUREACCESS_STREAMING,
-                            work->w,
-                            work->h);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STREAMING, work->w, work->h);
     if (texture == NULL) {
         PrintMessage("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
     }
 
-
-    //Set the frame manager to 60 Hz
+    // Set the frame manager to 60 Hz
     SDL_initFramerate(&m_FPSmanager);
     SDL_setFramerate(&m_FPSmanager, 60);
 
-    //Loads the debug fonts
+    // Loads the debug fonts
     LoadFont();
 
     return true;
 }
 
 void CVideoSystem::LoadFont() {
-    FILE *pFile;
-    char strTemp[255];
-    int i = 0;
+    FILE* pFile;
+    char  strTemp[255];
+    int   i = 0;
 
-    //Loading debug fonts
+    // Loading debug fonts
     font = SDL_LoadBMP("data/DebugFonts.bmp");
 
-    if (font == NULL)
-        PrintMessage("CVideoSystem:: DebugFonts not found");
+    if (font == NULL) PrintMessage("CVideoSystem:: DebugFonts not found");
 
     pFile = fopen("data/font.txt", "r");
 
-    if (pFile == NULL)
-        PrintMessage("font.txt not found");
+    if (pFile == NULL) PrintMessage("font.txt not found");
 
     while (!feof(pFile)) {
         fgets(strTemp, 255, pFile);
@@ -143,8 +125,7 @@ void CVideoSystem::LoadFont() {
         i++;
     }
 
-    // SDL_SetColorKey(font,SDL_SRCCOLORKEY,SDL_MapRGB(screen->format,0,0,0));
-    SDL_Texture *textureFont = SDL_CreateTextureFromSurface(renderer, font); // Convert surface to texture
+    SDL_Texture* textureFont = SDL_CreateTextureFromSurface(renderer, font);  // Convert surface to texture
     if (textureFont == NULL) {
         PrintMessage("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
         return;
@@ -152,7 +133,7 @@ void CVideoSystem::LoadFont() {
 
     // Set the color key (transparent color) for the texture using SDL_SetTextureColorMod
     // Here, we're making black (0,0,0) transparent in the texture
-    SDL_SetTextureColorMod(textureFont, 0, 0, 0); // Set black to transparent
+    SDL_SetTextureColorMod(textureFont, 0, 0, 0);  // Set black to transparent
 
     // Now you can render the texture
     SDL_RenderCopy(renderer, textureFont, NULL, NULL);
@@ -163,22 +144,20 @@ void CVideoSystem::LoadFont() {
 }
 
 // To clear the screen
- void CVideoSystem::Clear()
- {
+void CVideoSystem::Clear() {
     Uint32 color = SDL_MapRGB(work->format, 0, 0, 0);
     SDL_FillRect(work, NULL, color);
- }
+}
 
-
-//Copy the work surface to screen backbuffer and then flip
+// Copy the work surface to screen backbuffer and then flip
 void CVideoSystem::Draw() {
     SDL_UnlockSurface(work);
 
     nowTime = SDL_GetTicks();
     if (nowTime > lastTime + 500) {
-        nFps = (float) nFpsCount * 1000 / (nowTime - lastTime);
+        nFps      = (float)nFpsCount * 1000 / (nowTime - lastTime);
         nFpsCount = 0;
-        lastTime = nowTime;
+        lastTime  = nowTime;
     }
 
     DrawText(0, 0, "%2.2f FPS", nFps);
@@ -187,9 +166,6 @@ void CVideoSystem::Draw() {
 
     //  scale2x(work,screen);
 
-    // SDL_BlitSurface(work,NULL,screen,NULL);
-    // Assuming you have a valid SDL_Renderer `renderer` and SDL_Window `window`
-    // SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, work);  // Create texture from surface
     if (texture == NULL) {
         PrintMessage("CVideoSystem::BlitSurface Create Texture Failed %s", SDL_GetError());
         return;
@@ -199,13 +175,10 @@ void CVideoSystem::Draw() {
 
     SDL_UpdateTexture(texture, NULL, work->pixels, work->pitch);
 
-    SDL_RenderCopy(renderer, texture, NULL, NULL); // Render texture to the entire screen
-    SDL_RenderPresent(renderer); // Present the renderer to the screen
-    // SDL_DestroyTexture(texture);  // Clean up the texture after rendering
+    SDL_RenderCopy(renderer, texture, NULL, NULL);  // Render texture to the entire screen
+    SDL_RenderPresent(renderer);                    // Present the renderer to the screen
 
-    // SDL_Flip(screen);
-
-    //Limit the frame rate to 60 Hz
+    // Limit the frame rate to 60 Hz
 #ifndef __EMSCRIPTEN__
     SDL_framerateDelay(&m_FPSmanager);
 #endif
@@ -213,7 +186,7 @@ void CVideoSystem::Draw() {
     nFpsCount++;
 }
 
-//this is the MMX version of Scale2x only uses this if we have a CPU with MMX support
+// this is the MMX version of Scale2x only uses this if we have a CPU with MMX support
 void CVideoSystem::FilterImage() {
     /*#ifndef _XBOX
         if(SDL_LockSurface(work) < 0)
@@ -234,9 +207,6 @@ void CVideoSystem::FilterImage() {
        scr2=scr1 + (work->pitch/2);
 
         scale2x_16_mmx(dst0,dst1,scr0,scr1,scr2,640);
-
-
-
 
       for(int i=0;i<240;i++)
       {
@@ -259,12 +229,11 @@ void CVideoSystem::FilterImage() {
     #endif*/
 }
 
-void CVideoSystem::DrawRect(Sint16 x, Sint16 y, Sint16 x1, Sint16 y1, Uint8 R, Uint8 G, Uint8 B) {
-}
+void CVideoSystem::DrawRect(Sint16 x, Sint16 y, Sint16 x1, Sint16 y1, Uint8 R, Uint8 G, Uint8 B) {}
 
-//Draw a string to video
-void CVideoSystem::DrawText(int x, int y, char *strText, ...) {
-    char string[255]; // Temporary string
+// Draw a string to video
+void CVideoSystem::DrawText(int x, int y, char* strText, ...) {
+    char string[255];  // Temporary string
 
     int nRow = 0;
     int nCol = 0;
@@ -272,9 +241,9 @@ void CVideoSystem::DrawText(int x, int y, char *strText, ...) {
     SDL_Rect fontRect;
     SDL_Rect screenRect;
 
-    va_list ap; // Pointer To List Of Arguments
-    va_start(ap, strText); // Parses The String For Variables
-    vsprintf(string, strText, ap); // Converts Symbols To Actual Numbers
+    va_list ap;                     // Pointer To List Of Arguments
+    va_start(ap, strText);          // Parses The String For Variables
+    vsprintf(string, strText, ap);  // Converts Symbols To Actual Numbers
     va_end(ap);
 
     memset(&fontRect, 0, sizeof(SDL_Rect));
@@ -283,12 +252,10 @@ void CVideoSystem::DrawText(int x, int y, char *strText, ...) {
     screenRect.w = 5;
     screenRect.h = 8;
 
-
     fontRect = screenRect;
 
     screenRect.x = x;
     screenRect.y = y;
-
 
     for (int i = 0; i < strlen(string); i++) {
         for (int j = 0; j < 255; j++) {
@@ -307,35 +274,13 @@ void CVideoSystem::DrawText(int x, int y, char *strText, ...) {
             screenRect.x += 5;
     }
 
-
     //  SDL_BlitSurface(font,NULL,work,NULL);
 }
 
-//Creates a SDL Surface
-// SDL_Surface * CVideoSystem::CreateSurface(int x,int y)
-// {
-//     SDL_Surface* temp=NULL;
-
-//     temp=SDL_CreateRGBSurface(SDL_SWSURFACE,x,y,16,screen->format->Rmask
-//                                                   ,screen->format->Gmask
-//                                                   ,screen->format->Bmask
-//                                                   ,screen->format->Amask);
-
-
-//     if(temp==NULL)
-//     {
-//         PrintMessage("CVideoSystem::CreateSurfac Create Surfacce Failed %s",SDL_GetError());
-//         return NULL;
-//     }
-//     return temp;
-
-// }
-
-SDL_Surface *CVideoSystem::CreateSurface(int x, int y) {
-    SDL_Surface *temp = NULL;
-
-    // In SDL2, we use SDL_CreateRGBSurfaceWithFormat for creating a surface
-    temp = SDL_CreateRGBSurfaceWithFormat(0, x, y, 16, SDL_PIXELFORMAT_RGB565); // Using RGB565 as format
+// Creates a SDL Surface
+SDL_Surface* CVideoSystem::CreateSurface(int x, int y) {
+    SDL_Surface* temp = NULL;
+    temp              = SDL_CreateRGBSurfaceWithFormat(0, x, y, 16, SDL_PIXELFORMAT_RGB565);  // Using RGB565 as format
 
     if (temp == NULL) {
         PrintMessage("CVideoSystem::CreateSurface Create Surface Failed %s", SDL_GetError());
@@ -344,28 +289,26 @@ SDL_Surface *CVideoSystem::CreateSurface(int x, int y) {
     return temp;
 }
 
+void CVideoSystem::NormalBlt(SFFSPRITE* lpSprite, s16 x, s16 y, bool bMask) {
+    u16* lpWorkData;
+    u16  pitch;
 
-void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
-    u16 *lpWorkData;
-    u16 pitch;
+    s16  width      = lpSprite->PcxHeader.widht;
+    s16  height     = lpSprite->PcxHeader.height;
+    u8*  byData     = lpSprite->byPcxFile;
+    u16* ColorTable = lpSprite->ColorPallet;
 
-    s16 width = lpSprite->PcxHeader.widht;
-    s16 height = lpSprite->PcxHeader.height;
-    u8 *byData = lpSprite->byPcxFile;
-    u16 *ColorTable = lpSprite->ColorPallet;
-
-    //calculate x and y value
+    // calculate x and y value
     y -= height - (height - lpSprite->y);
     x -= width - (width - lpSprite->x);
 
-    lpWorkData = (u16 *) work->pixels;
-    pitch = work->pitch / 2;
+    lpWorkData = (u16*)work->pixels;
+    pitch      = work->pitch / 2;
 
-    u16 yClip = 0;
+    u16 yClip  = 0;
     u16 yClip2 = 0;
-    u16 xClip = 0;
+    u16 xClip  = 0;
     u16 xClip2 = 0;
-
 
     if (x + width > XMAX) {
         width -= x + width - XMAX;
@@ -373,16 +316,14 @@ void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
 
     if (x < 0) {
         xClip = -x;
-        x = 0;
+        x     = 0;
     }
 
-
-    if (y + height > YMAX)
-        height -= y + height - YMAX;
+    if (y + height > YMAX) height -= y + height - YMAX;
 
     if (y < 0) {
         yClip = -y;
-        y = 0;
+        y     = 0;
     }
 
     lpWorkData += y * pitch;
@@ -410,47 +351,44 @@ void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
     }
 }
 
-void CVideoSystem::NormalFlipH(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
-    u16 *lpWorkData;
-    u16 pitch;
+void CVideoSystem::NormalFlipH(SFFSPRITE* lpSprite, s16 x, s16 y, bool bMask) {
+    u16* lpWorkData;
+    u16  pitch;
 
-    s16 width = lpSprite->PcxHeader.widht;
-    s16 height = lpSprite->PcxHeader.height;
-    u8 *byData = lpSprite->byPcxFile;
-    u16 *ColorTable = lpSprite->ColorPallet;
+    s16  width      = lpSprite->PcxHeader.widht;
+    s16  height     = lpSprite->PcxHeader.height;
+    u8*  byData     = lpSprite->byPcxFile;
+    u16* ColorTable = lpSprite->ColorPallet;
 
-    //calculate x and y value
+    // calculate x and y value
     y -= height - (height - lpSprite->y);
     x -= width - lpSprite->x;
 
-    lpWorkData = (u16 *) work->pixels;
-    pitch = work->pitch / 2;
+    lpWorkData = (u16*)work->pixels;
+    pitch      = work->pitch / 2;
 
-    u16 yClip = 0;
+    u16 yClip  = 0;
     u16 yClip2 = 0;
-    u16 xClip = 0;
+    u16 xClip  = 0;
     u16 xClip2 = 0;
-
 
     if (x + width > XMAX) {
         xClip2 = width;
         width -= x + width - XMAX;
-        //need for h flip
+        // need for h flip
         xClip2 = xClip2 - width;
     }
 
     if (x < 0) {
         xClip = -x;
-        x = 0;
+        x     = 0;
     }
 
-
-    if (y + height > YMAX)
-        height -= y + height - YMAX;
+    if (y + height > YMAX) height -= y + height - YMAX;
 
     if (y < 0) {
         yClip = -y;
-        y = 0;
+        y     = 0;
     }
 
     lpWorkData += y * pitch;
@@ -478,23 +416,17 @@ void CVideoSystem::NormalFlipH(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
     }
 }
 
-// u16 CVideoSystem::MapRGB(Uint8  red,Uint8  green,Uint8 blue)
-// {
-//    return (u16)SDL_MapRGB(screen->format,red,green,blue);
-// }
-
 u16 CVideoSystem::MapRGB(Uint8 red, Uint8 green, Uint8 blue) {
     // Map RGB to a 16-bit RGB565 format.
-    Uint8 r = red >> 3; // Red: 5 bits
-    Uint8 g = green >> 2; // Green: 6 bits
-    Uint8 b = blue >> 3; // Blue: 5 bits
+    Uint8 r = red >> 3;    // Red: 5 bits
+    Uint8 g = green >> 2;  // Green: 6 bits
+    Uint8 b = blue >> 3;   // Blue: 5 bits
 
     // Combine the components into a single 16-bit value
     u16 color = (r << 11) | (g << 5) | b;
 
-    return color; // Return the 16-bit mapped color.
+    return color;  // Return the 16-bit mapped color.
 }
-
 
 /*
 void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask,float xScale,float yScale,PalFX *effect)
@@ -543,10 +475,10 @@ void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask,float xS
             for(int j=xClip;j<width;j++)
             {
               *lpWorkData=(u16)SDL_MapRGB(screen->format,
-                                       ColorTable[byData[(u16)(j/xScale) + (u16)(i/yScale)*lpSprite->PcxHeader.widht]].R,
-                                       ColorTable[byData[(u16)(j/xScale) + (u16)(i/yScale)*lpSprite->PcxHeader.widht]].G,
-                                       ColorTable[byData[(u16)(j/xScale) + (u16)(i/yScale)*lpSprite->PcxHeader.widht]].B);
-               lpWorkData++;
+                                       ColorTable[byData[(u16)(j/xScale) +
+(u16)(i/yScale)*lpSprite->PcxHeader.widht]].R, ColorTable[byData[(u16)(j/xScale) +
+(u16)(i/yScale)*lpSprite->PcxHeader.widht]].G, ColorTable[byData[(u16)(j/xScale) +
+(u16)(i/yScale)*lpSprite->PcxHeader.widht]].B); lpWorkData++;
 
              }
              lpWorkData-=width-xClip;

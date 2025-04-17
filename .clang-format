@@ -1,0 +1,40 @@
+# Base style to inherit from
+BasedOnStyle: Google
+
+# Indentation settings
+IndentWidth: 4             # Number of spaces per indentation level
+TabWidth: 4                # Width of a tab character
+UseTab: Never              # Use spaces instead of tabs
+
+# Line length limit
+ColumnLimit: 120           # Maximum allowed line length
+
+# Parentheses spacing
+SpacesInParentheses: false # No space inside parentheses
+SpaceBeforeParens: ControlStatements # Space before parentheses in control statements (if, for, while, etc.)
+AllowShortFunctionsOnASingleLine: Inline # Allow short functions to be inlined
+
+# Braces formatting
+BreakBeforeBraces: Attach  # Keep opening brace on the same line
+
+# Include directives
+SortIncludes: true         # Automatically sort #include statements
+IncludeBlocks: Preserve    # Preserve original include block grouping
+
+
+# Pointer and reference alignment
+PointerAlignment: Left     # Align pointer stars with the type (e.g., int* ptr)
+DerivePointerAlignment: false
+
+# Alignment options
+AlignConsecutiveAssignments: true      # Vertically align consecutive assignments
+AlignConsecutiveDeclarations: true     # Vertically align consecutive declarations
+AlignOperands: true                    # Align operands in expressions
+
+# Comment handling
+CommentPragmas: '^ IWYU pragma:'       # Special comment pattern for include management tools
+ReflowComments: true                   # Reflow long comments into multiple lines
+FixNamespaceComments: true             # Add/fix trailing namespace comments
+
+# Declaration formatting
+AllowAllParametersOfDeclarationOnNextLine: false # Avoid putting all parameters on the next line

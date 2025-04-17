@@ -20,38 +20,41 @@
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
 #ifndef CONTROLLEREXECUTER_H
 #define CONTROLLEREXECUTER_H
 
 #define NUMCTRLFUNC 90
 
-class CControllerExecuter
-{
-CPlayer *m_pPlayer1;
-//Constructor && Destructor
-public:
+class CControllerExecuter {
+    CPlayer* m_pPlayer1;
+    // Constructor && Destructor
+   public:
     CControllerExecuter();
-    ~CControllerExecuter();
-//Init Function Table
-    void InitFuncTable();
-    void SetPlayer(CPlayer *p){m_pPlayer1=p;};
 
-//execute the controller
+    ~CControllerExecuter();
+
+    // Init Function Table
+    void InitFuncTable();
+
+    void SetPlayer(CPlayer* p) { m_pPlayer1 = p; };
+
+    // execute the controller
     void ExecuteController(int nController);
-    
-//Controller functions
+
+    // Controller functions
     void NullController();
+
     void ChangeState();
+
     void ChangeAnim();
+
     void VelSet();
+
     void VarSet();
 
-    
-    
-typedef void (CControllerExecuter::*pt2CtrlMember)();
-pt2CtrlMember pFuncTable[NUMCTRLFUNC]; 
+    typedef void (CControllerExecuter::*pt2CtrlMember)();
 
+    pt2CtrlMember pFuncTable[NUMCTRLFUNC];
 };
 
 #endif
