@@ -11,6 +11,7 @@ The goal is to provide a simple, extensible, and cross-platform foundation for c
 
 
 ![OpenMugen Gameplay](https://github.com/user-attachments/assets/e7a9a194-2dde-4d4f-b41a-24b9154fe2fb)
+
 [Play](https://humbertodias.github.io/sdl-openmugen/)
 
 ## 🕹 Controls
@@ -30,15 +31,13 @@ The following libraries must be installed:
 - `SDL2`
 - `SDL2_image`
 - `SDL2_gfx`
-- `SDL 1.2 compatibility layer`
-
 
 ## ⚙️ Build Instructions
 
 ### 🐧 Ubuntu/Debian
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev libsdl1.2-compat-dev
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-gfx-dev
 ```
 
 To build the project:
@@ -66,9 +65,3 @@ Once built, run the executable:
 ## 🤝 Contributing
 
 Pull requests are welcome! Feel free to open issues for bug reports or feature suggestions.
-
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-If you'd like, I can also help you add sections for custom characters, modding, or controller support. Want to include any of those?
