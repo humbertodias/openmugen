@@ -46,3 +46,6 @@ targz/data:
 ci:
 	docker build -t openmugen .
 	docker run --rm -v "$(PWD)":/app -w /app openmugen sh -c "make clean build"
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/OpenMugen
