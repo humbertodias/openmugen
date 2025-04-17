@@ -70,16 +70,16 @@ bool CVideoSystem::InitSystem() {
     }
 
     // Set the window icon
-    SDL_SetWindowIcon(window, icon); // 'window' is your SDL_Window*
+    SDL_SetWindowIcon(window, icon);
 
     // Free the icon surface after setting the icon
     SDL_FreeSurface(icon);
 
     //Create the work surface
-    work = CreateSurface(320, 240);
+    work = CreateSurface(XMAX, YMAX);
 
     // Create a rectangle for the work surface (320x240)
-    SDL_Rect workRect = {0, 0, 320, 240}; // Defining the area to fill
+    SDL_Rect workRect = {0, 0, XMAX, YMAX}; // Defining the area to fill
 
     // Set the draw color to magenta (RGB: 255, 0, 255, A: 255 for full opacity)
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
@@ -214,9 +214,6 @@ void CVideoSystem::FilterImage() {
        scr2=scr1 + (work->pitch/2);
 
         scale2x_16_mmx(dst0,dst1,scr0,scr1,scr2,640);
-
-
-
 
       for(int i=0;i<240;i++)
       {
