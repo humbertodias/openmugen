@@ -16,7 +16,7 @@ permissions:
 
 jobs:
 
-  Linux:
+  emsdk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
 
       - name: Build WebAssembly
         run: |
-          source ./emsdk_env.sh
+          source ./emsdk/emsdk_env.sh
           make clean build-wasm
 
         # Pages
