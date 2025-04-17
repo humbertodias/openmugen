@@ -112,6 +112,7 @@ void CAllocater::Free(void* CurMem) {
 void CAllocater::FreeAllocater() {
     if (!bFree) {
         for (u32 i = 0; i < nMemListSize; i++) {
+            if (lpMemList == NULL) break;
             if (lpMemList[i].nType == ALLOC) Free(lpMemList[i].adrress);
         }
     }
