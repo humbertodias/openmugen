@@ -20,19 +20,19 @@
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-class CSDLManager
-{
+class CSDLManager {
 public:
-//Contructor and Desconstructor
-     CSDLManager();
+    //Contructor and Desconstructor
+    CSDLManager();
+
     ~CSDLManager();
-    
+
     bool Init();
+
     void CleanSDL();
-    CVideoSystem* GetVideoSystem(){return &m_VideoSystem;}
-    
+
+    CVideoSystem *GetVideoSystem() { return &m_VideoSystem; }
+
 public:
     CVideoSystem m_VideoSystem;
-
-
 };

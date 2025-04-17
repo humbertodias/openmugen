@@ -26,32 +26,37 @@
 
 #define NUMCTRLFUNC 90
 
-class CControllerExecuter
-{
-CPlayer *m_pPlayer1;
-//Constructor && Destructor
+class CControllerExecuter {
+    CPlayer *m_pPlayer1;
+    //Constructor && Destructor
 public:
     CControllerExecuter();
-    ~CControllerExecuter();
-//Init Function Table
-    void InitFuncTable();
-    void SetPlayer(CPlayer *p){m_pPlayer1=p;};
 
-//execute the controller
+    ~CControllerExecuter();
+
+    //Init Function Table
+    void InitFuncTable();
+
+    void SetPlayer(CPlayer *p) { m_pPlayer1 = p; };
+
+    //execute the controller
     void ExecuteController(int nController);
-    
-//Controller functions
+
+    //Controller functions
     void NullController();
+
     void ChangeState();
+
     void ChangeAnim();
+
     void VelSet();
+
     void VarSet();
 
-    
-    
-typedef void (CControllerExecuter::*pt2CtrlMember)();
-pt2CtrlMember pFuncTable[NUMCTRLFUNC]; 
 
+    typedef void (CControllerExecuter::*pt2CtrlMember)();
+
+    pt2CtrlMember pFuncTable[NUMCTRLFUNC];
 };
 
 #endif

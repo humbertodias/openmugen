@@ -26,7 +26,6 @@ void scale2x(SDL_Surface *src, SDL_Surface *dst);
 
 //Konstructor
 CVideoSystem::CVideoSystem() {
-    // work=screen=NULL;
     work = NULL;
     window = NULL;
     renderer = NULL;
@@ -43,10 +42,6 @@ CVideoSystem::~CVideoSystem() {
 }
 
 void CVideoSystem::CleanUp() {
-    // SDL_FreeSurface(work);
-    // SDL_FreeSurface(screen);
-    // SDL_FreeSurface(font);
-
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(font);
     SDL_FreeSurface(work);
@@ -56,8 +51,6 @@ void CVideoSystem::CleanUp() {
 
 bool CVideoSystem::InitSystem() {
     PrintMessage("CVideoSystem::InitSystem()");
-    //Set Video mode and get main Surface
-    // screen=SDL_SetVideoMode(320,240,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
     window = SDL_CreateWindow(OMTITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240,
                               SDL_SWSURFACE | SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -67,8 +60,6 @@ bool CVideoSystem::InitSystem() {
         throw(CError("SDL_SetVideoMode Failed"));
         return false;
     }
-    //OpenMugen Title
-    // SDL_WM_SetCaption(OMTITLE,NULL);
     SDL_SetWindowTitle(window, OMTITLE);
 
     // Load the icon image as an SDL_Surface
@@ -86,7 +77,6 @@ bool CVideoSystem::InitSystem() {
 
     //Create the work surface
     work = CreateSurface(320, 240);
-    // SDL_FillRect(work,NULL,SDL_MapRGB(screen->format,255,0,255));
 
     // Create a rectangle for the work surface (320x240)
     SDL_Rect workRect = {0, 0, 320, 240}; // Defining the area to fill
@@ -100,16 +90,14 @@ bool CVideoSystem::InitSystem() {
     // Present the renderer (update the window to show the changes)
     SDL_RenderPresent(renderer);
 
-
     texture = SDL_CreateTexture(renderer,
-                            SDL_PIXELFORMAT_RGB565,
-                            SDL_TEXTUREACCESS_STREAMING,
-                            work->w,
-                            work->h);
+                                SDL_PIXELFORMAT_RGB565,
+                                SDL_TEXTUREACCESS_STREAMING,
+                                work->w,
+                                work->h);
     if (texture == NULL) {
         PrintMessage("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
     }
-
 
     //Set the frame manager to 60 Hz
     SDL_initFramerate(&m_FPSmanager);
@@ -143,7 +131,6 @@ void CVideoSystem::LoadFont() {
         i++;
     }
 
-    // SDL_SetColorKey(font,SDL_SRCCOLORKEY,SDL_MapRGB(screen->format,0,0,0));
     SDL_Texture *textureFont = SDL_CreateTextureFromSurface(renderer, font); // Convert surface to texture
     if (textureFont == NULL) {
         PrintMessage("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
@@ -163,11 +150,10 @@ void CVideoSystem::LoadFont() {
 }
 
 // To clear the screen
- void CVideoSystem::Clear()
- {
+void CVideoSystem::Clear() {
     Uint32 color = SDL_MapRGB(work->format, 0, 0, 0);
     SDL_FillRect(work, NULL, color);
- }
+}
 
 
 //Copy the work surface to screen backbuffer and then flip
@@ -187,9 +173,6 @@ void CVideoSystem::Draw() {
 
     //  scale2x(work,screen);
 
-    // SDL_BlitSurface(work,NULL,screen,NULL);
-    // Assuming you have a valid SDL_Renderer `renderer` and SDL_Window `window`
-    // SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, work);  // Create texture from surface
     if (texture == NULL) {
         PrintMessage("CVideoSystem::BlitSurface Create Texture Failed %s", SDL_GetError());
         return;
@@ -201,9 +184,6 @@ void CVideoSystem::Draw() {
 
     SDL_RenderCopy(renderer, texture, NULL, NULL); // Render texture to the entire screen
     SDL_RenderPresent(renderer); // Present the renderer to the screen
-    // SDL_DestroyTexture(texture);  // Clean up the texture after rendering
-
-    // SDL_Flip(screen);
 
     //Limit the frame rate to 60 Hz
 #ifndef __EMSCRIPTEN__
@@ -312,29 +292,8 @@ void CVideoSystem::DrawText(int x, int y, char *strText, ...) {
 }
 
 //Creates a SDL Surface
-// SDL_Surface * CVideoSystem::CreateSurface(int x,int y)
-// {
-//     SDL_Surface* temp=NULL;
-
-//     temp=SDL_CreateRGBSurface(SDL_SWSURFACE,x,y,16,screen->format->Rmask
-//                                                   ,screen->format->Gmask
-//                                                   ,screen->format->Bmask
-//                                                   ,screen->format->Amask);
-
-
-//     if(temp==NULL)
-//     {
-//         PrintMessage("CVideoSystem::CreateSurfac Create Surfacce Failed %s",SDL_GetError());
-//         return NULL;
-//     }
-//     return temp;
-
-// }
-
 SDL_Surface *CVideoSystem::CreateSurface(int x, int y) {
     SDL_Surface *temp = NULL;
-
-    // In SDL2, we use SDL_CreateRGBSurfaceWithFormat for creating a surface
     temp = SDL_CreateRGBSurfaceWithFormat(0, x, y, 16, SDL_PIXELFORMAT_RGB565); // Using RGB565 as format
 
     if (temp == NULL) {
@@ -477,11 +436,6 @@ void CVideoSystem::NormalFlipH(SFFSPRITE *lpSprite, s16 x, s16 y, bool bMask) {
         }
     }
 }
-
-// u16 CVideoSystem::MapRGB(Uint8  red,Uint8  green,Uint8 blue)
-// {
-//    return (u16)SDL_MapRGB(screen->format,red,green,blue);
-// }
 
 u16 CVideoSystem::MapRGB(Uint8 red, Uint8 green, Uint8 blue) {
     // Map RGB to a 16-bit RGB565 format.

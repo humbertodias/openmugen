@@ -23,47 +23,37 @@
 #include "global.h"
 
 //Destructor
-CSDLManager::~CSDLManager()
-{
-
+CSDLManager::~CSDLManager() {
 }
+
 //Constructor
-CSDLManager::CSDLManager()
-{
-
-
+CSDLManager::CSDLManager() {
 }
 
 //Init the SDL SUB systems
-bool CSDLManager::Init()
-{
+bool CSDLManager::Init() {
     PrintMessage("CSDLManager:: Init()");
 
     //Init SDL and the sub-systems of it(VIDEO, TIMER AND AUDIO SYSTEM)
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0 )
-    {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
         PrintMessage("CSDLManager::SDL_Init Failed");
-        PrintMessage("SDL error=%s",SDL_GetError());
+        PrintMessage("SDL error=%s", SDL_GetError());
         return false;
     }
     PrintMessage("CSDLManager:: SDL_Init OK");
-    //Set the icon for the application
-    // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
-    
+
     //Now init our Video System
-    if(!m_VideoSystem.InitSystem())
-    {
+    if (!m_VideoSystem.InitSystem()) {
         PrintMessage("CSDLManager:: VideoSystem Init Failed");
         return false;
     }
 
     PrintMessage("CSDLManager::VideoSystem Init OK");
 
-	return true;
+    return true;
 }
 
-void CSDLManager::CleanSDL()
-{
+void CSDLManager::CleanSDL() {
     PrintMessage("CSDLManager:: Cleaning SDL");
     m_VideoSystem.CleanUp();
     //SDL_Quit();

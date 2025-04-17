@@ -54,7 +54,8 @@ class CGameTimer;
 #include "game.h"
 
 //functions
-void PrintMessage(char *str,...);
+void PrintMessage(char *str, ...);
+
 void InitLogFile();
 
 #endif

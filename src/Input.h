@@ -25,15 +25,13 @@
 
 #include "global.h"
 
-class CInput
-{
+class CInput {
 public:
     CInput();
+
     ~CInput();
 
     static void ProcessInput(KEYBOARDDATA *lpKeyBoard);
-
-
 };
 
 

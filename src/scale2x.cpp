@@ -44,127 +44,130 @@
 /***************************************************************************/
 /* Scale2x C implementation */
 
-static inline void scale2x_8_def_single(scale2x_uint8* __restrict__ dst, const scale2x_uint8* __restrict__ src0, const scale2x_uint8* __restrict__ src1, const scale2x_uint8* __restrict__ src2, unsigned count)
-{
-	assert(count >= 2);
+static inline void scale2x_8_def_single(scale2x_uint8 *__restrict__ dst, const scale2x_uint8 *__restrict__ src0,
+                                        const scale2x_uint8 *__restrict__ src1, const scale2x_uint8 *__restrict__ src2,
+                                        unsigned count) {
+    assert(count >= 2);
 
-	/* first pixel */
-	dst[0] = src1[0];
-	if (src1[1] == src0[0] && src2[0] != src0[0])
-		dst[1] = src0[0];
-	else
-		dst[1] = src1[0];
-	++src0;
-	++src1;
-	++src2;
-	dst += 2;
+    /* first pixel */
+    dst[0] = src1[0];
+    if (src1[1] == src0[0] && src2[0] != src0[0])
+        dst[1] = src0[0];
+    else
+        dst[1] = src1[0];
+    ++src0;
+    ++src1;
+    ++src2;
+    dst += 2;
 
-	/* central pixels */
-	count -= 2;
-	while (count) {
-		if (src0[0] != src2[0] && src1[-1] != src1[1]) {
-			dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
-			dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
-		} else {
-			dst[0] = src1[0];
-			dst[1] = src1[0];
-		}
+    /* central pixels */
+    count -= 2;
+    while (count) {
+        if (src0[0] != src2[0] && src1[-1] != src1[1]) {
+            dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
+            dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
+        } else {
+            dst[0] = src1[0];
+            dst[1] = src1[0];
+        }
 
-		++src0;
-		++src1;
-		++src2;
-		dst += 2;
-		--count;
-	}
+        ++src0;
+        ++src1;
+        ++src2;
+        dst += 2;
+        --count;
+    }
 
-	/* last pixel */
-	if (src1[-1] == src0[0] && src2[0] != src0[0])
-		dst[0] = src0[0];
-	else
-		dst[0] = src1[0];
-	dst[1] = src1[0];
+    /* last pixel */
+    if (src1[-1] == src0[0] && src2[0] != src0[0])
+        dst[0] = src0[0];
+    else
+        dst[0] = src1[0];
+    dst[1] = src1[0];
 }
 
-static inline void scale2x_16_def_single(scale2x_uint16* __restrict__ dst, const scale2x_uint16* __restrict__ src0, const scale2x_uint16* __restrict__ src1, const scale2x_uint16* __restrict__ src2, unsigned count)
-{
-	assert(count >= 2);
+static inline void scale2x_16_def_single(scale2x_uint16 *__restrict__ dst, const scale2x_uint16 *__restrict__ src0,
+                                         const scale2x_uint16 *__restrict__ src1,
+                                         const scale2x_uint16 *__restrict__ src2, unsigned count) {
+    assert(count >= 2);
 
-	/* first pixel */
-	dst[0] = src1[0];
-	if (src1[1] == src0[0] && src2[0] != src0[0])
-		dst[1] = src0[0];
-	else
-		dst[1] = src1[0];
-	++src0;
-	++src1;
-	++src2;
-	dst += 2;
+    /* first pixel */
+    dst[0] = src1[0];
+    if (src1[1] == src0[0] && src2[0] != src0[0])
+        dst[1] = src0[0];
+    else
+        dst[1] = src1[0];
+    ++src0;
+    ++src1;
+    ++src2;
+    dst += 2;
 
-	/* central pixels */
-	count -= 2;
-	while (count) {
-		if (src0[0] != src2[0] && src1[-1] != src1[1]) {
-			dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
-			dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
-		} else {
-			dst[0] = src1[0];
-			dst[1] = src1[0];
-		}
+    /* central pixels */
+    count -= 2;
+    while (count) {
+        if (src0[0] != src2[0] && src1[-1] != src1[1]) {
+            dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
+            dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
+        } else {
+            dst[0] = src1[0];
+            dst[1] = src1[0];
+        }
 
-		++src0;
-		++src1;
-		++src2;
-		dst += 2;
-		--count;
-	}
+        ++src0;
+        ++src1;
+        ++src2;
+        dst += 2;
+        --count;
+    }
 
-	/* last pixel */
-	if (src1[-1] == src0[0] && src2[0] != src0[0])
-		dst[0] = src0[0];
-	else
-		dst[0] = src1[0];
-	dst[1] = src1[0];
+    /* last pixel */
+    if (src1[-1] == src0[0] && src2[0] != src0[0])
+        dst[0] = src0[0];
+    else
+        dst[0] = src1[0];
+    dst[1] = src1[0];
 }
 
-static inline void scale2x_32_def_single(scale2x_uint32* __restrict__ dst, const scale2x_uint32* __restrict__ src0, const scale2x_uint32* __restrict__ src1, const scale2x_uint32* __restrict__ src2, unsigned count)
-{
-	assert(count >= 2);
+static inline void scale2x_32_def_single(scale2x_uint32 *__restrict__ dst, const scale2x_uint32 *__restrict__ src0,
+                                         const scale2x_uint32 *__restrict__ src1,
+                                         const scale2x_uint32 *__restrict__ src2, unsigned count) {
+    assert(count >= 2);
 
-	/* first pixel */
-	dst[0] = src1[0];
-	if (src1[1] == src0[0] && src2[0] != src0[0])
-		dst[1] = src0[0];
-	else
-		dst[1] = src1[0];
-	++src0;
-	++src1;
-	++src2;
-	dst += 2;
+    /* first pixel */
+    dst[0] = src1[0];
+    if (src1[1] == src0[0] && src2[0] != src0[0])
+        dst[1] = src0[0];
+    else
+        dst[1] = src1[0];
+    ++src0;
+    ++src1;
+    ++src2;
+    dst += 2;
 
-	/* central pixels */
-	count -= 2;
-	while (count) {
-		if (src0[0] != src2[0] && src1[-1] != src1[1]) {
-			dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
-			dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
-		} else {
-			dst[0] = src1[0];
-			dst[1] = src1[0];
-		}
+    /* central pixels */
+    count -= 2;
+    while (count) {
+        if (src0[0] != src2[0] && src1[-1] != src1[1]) {
+            dst[0] = src1[-1] == src0[0] ? src0[0] : src1[0];
+            dst[1] = src1[1] == src0[0] ? src0[0] : src1[0];
+        } else {
+            dst[0] = src1[0];
+            dst[1] = src1[0];
+        }
 
-		++src0;
-		++src1;
-		++src2;
-		dst += 2;
-		--count;
-	}
+        ++src0;
+        ++src1;
+        ++src2;
+        dst += 2;
+        --count;
+    }
 
-	/* last pixel */
-	if (src1[-1] == src0[0] && src2[0] != src0[0])
-		dst[0] = src0[0];
-	else
-		dst[0] = src1[0];
-	dst[1] = src1[0];
+    /* last pixel */
+    if (src1[-1] == src0[0] && src2[0] != src0[0])
+        dst[0] = src0[0];
+    else
+        dst[0] = src1[0];
+    dst[1] = src1[0];
 }
 
 /**
@@ -180,12 +183,12 @@ static inline void scale2x_32_def_single(scale2x_uint32* __restrict__ dst, const
  * \param dst0 First destination row, double length in pixels.
  * \param dst1 Second destination row, double length in pixels.
  */
-void scale2x_8_def(scale2x_uint8* dst0, scale2x_uint8* dst1, const scale2x_uint8* src0, const scale2x_uint8* src1, const scale2x_uint8* src2, unsigned count)
-{
-	assert(count >= 2);
+void scale2x_8_def(scale2x_uint8 *dst0, scale2x_uint8 *dst1, const scale2x_uint8 *src0, const scale2x_uint8 *src1,
+                   const scale2x_uint8 *src2, unsigned count) {
+    assert(count >= 2);
 
-	scale2x_8_def_single(dst0, src0, src1, src2, count);
-	scale2x_8_def_single(dst1, src2, src1, src0, count);
+    scale2x_8_def_single(dst0, src0, src1, src2, count);
+    scale2x_8_def_single(dst1, src2, src1, src0, count);
 }
 
 /**
@@ -199,12 +202,12 @@ void scale2x_8_def(scale2x_uint8* dst0, scale2x_uint8* dst1, const scale2x_uint8
  * \param dst0 First destination row, double length in pixels.
  * \param dst1 Second destination row, double length in pixels.
  */
-void scale2x_16_def(scale2x_uint16* dst0, scale2x_uint16* dst1, const scale2x_uint16* src0, const scale2x_uint16* src1, const scale2x_uint16* src2, unsigned count)
-{
-	assert(count >= 2);
+void scale2x_16_def(scale2x_uint16 *dst0, scale2x_uint16 *dst1, const scale2x_uint16 *src0, const scale2x_uint16 *src1,
+                    const scale2x_uint16 *src2, unsigned count) {
+    assert(count >= 2);
 
-	scale2x_16_def_single(dst0, src0, src1, src2, count);
-	scale2x_16_def_single(dst1, src2, src1, src0, count);
+    scale2x_16_def_single(dst0, src0, src1, src2, count);
+    scale2x_16_def_single(dst1, src2, src1, src0, count);
 }
 
 /**
@@ -218,12 +221,12 @@ void scale2x_16_def(scale2x_uint16* dst0, scale2x_uint16* dst1, const scale2x_ui
  * \param dst0 First destination row, double length in pixels.
  * \param dst1 Second destination row, double length in pixels.
  */
-void scale2x_32_def(scale2x_uint32* dst0, scale2x_uint32* dst1, const scale2x_uint32* src0, const scale2x_uint32* src1, const scale2x_uint32* src2, unsigned count)
-{
-	assert(count >= 2);
+void scale2x_32_def(scale2x_uint32 *dst0, scale2x_uint32 *dst1, const scale2x_uint32 *src0, const scale2x_uint32 *src1,
+                    const scale2x_uint32 *src2, unsigned count) {
+    assert(count >= 2);
 
-	scale2x_32_def_single(dst0, src0, src1, src2, count);
-	scale2x_32_def_single(dst1, src2, src1, src0, count);
+    scale2x_32_def_single(dst0, src0, src1, src2, count);
+    scale2x_32_def_single(dst1, src2, src1, src0, count);
 }
 
 /***************************************************************************/
@@ -925,4 +928,3 @@ void scale2x_32_mmx(scale2x_uint32* dst0, scale2x_uint32* dst1, const scale2x_ui
 }
 
 #endif
-

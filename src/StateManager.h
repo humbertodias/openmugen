@@ -20,7 +20,7 @@
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef STATEMANAGER_H 
+#ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
 
@@ -37,76 +37,103 @@
 #define S_sprprio				24
 #define S_facep2				26
 
-class CStateManager
-{
-    CAllocater     *m_pAlloc;
-public:
-	//Konstructor and Destructor
-	CStateManager();
-	~CStateManager();
-	
-	void SetAlloc(CAllocater *a){m_pAlloc=a;}
+class CStateManager {
+    CAllocater *m_pAlloc;
 
-	void AddStateDef(s32 nStateDefNum);
-	void AddState(s32 nStateNum,char *strSomeNumber);
-	void AddTriggerToState(u8 nType);
-	void AddTypeToState(u16 nType);
-	void AddInstruction(Uint16 nOpCode,float value,const char *strValue);
-	void ExchangeIns();
-	void *GetController();
-	void CleanUp();
-	INSTRUCTION *GetInst(){return pInst;}
-	int         GetHowManyInst(){return nCurrInst;}
-	//search a State
-	PLSTATEDEF* GetStateDef(int nStateNumber);
-	PLSTATEDEF* GetCurrStateDef();
-	
-	void ReallocStatedef(u16 index);
-	void ReallocManager();
-	
-	//SetFuction
-	void SetStateDefType(u8 nType);
-	void SetStateMoveType(u8 nType);
-	void SetStatePhysicType(u8 nType);
-	void SetStateAnim(s32 nAnim);
-	void SetStateCtrl(s8 nCtrl);
-	void SetStatePowerAdd(s16 nPowerAdd);
-	void SetStateJuggle(s16 nJuggle);
-	void SetStateHitDefPresit(bool bHitDef);
-	void SetMoveHitPresit(bool bMoveHit);
-	void SetStateHitCounterPresit(bool bHitCounter);
-	void SetSprPriority(u8 nSprpriority);
-	void SetStateFaceP2(bool bFaceP2);
-	
-	void SetVelSet(float x,float y);
-    void NewInst(){nCurrInst=0;}
-	// state���ò���
-	void SetParam(ConParmName nParam);
-	void SetHDParam(CONTROLHITDEFParmName nParam);
-	void SetPersistent();
-	void SetIgnorehitpause();
-	void SetDefaultStatedef();
-	void Reset();
-	
-	bool IsStateDefAviable(s32 nStateDefNum);
+public:
+    //Konstructor and Destructor
+    CStateManager();
+
+    ~CStateManager();
+
+    void SetAlloc(CAllocater *a) { m_pAlloc = a; }
+
+    void AddStateDef(s32 nStateDefNum);
+
+    void AddState(s32 nStateNum, char *strSomeNumber);
+
+    void AddTriggerToState(u8 nType);
+
+    void AddTypeToState(u16 nType);
+
+    void AddInstruction(Uint16 nOpCode, float value, const char *strValue);
+
+    void ExchangeIns();
+
+    void *GetController();
+
+    void CleanUp();
+
+    INSTRUCTION *GetInst() { return pInst; }
+    int GetHowManyInst() { return nCurrInst; }
+
+    //search a State
+    PLSTATEDEF *GetStateDef(int nStateNumber);
+
+    PLSTATEDEF *GetCurrStateDef();
+
+    void ReallocStatedef(u16 index);
+
+    void ReallocManager();
+
+    //SetFuction
+    void SetStateDefType(u8 nType);
+
+    void SetStateMoveType(u8 nType);
+
+    void SetStatePhysicType(u8 nType);
+
+    void SetStateAnim(s32 nAnim);
+
+    void SetStateCtrl(s8 nCtrl);
+
+    void SetStatePowerAdd(s16 nPowerAdd);
+
+    void SetStateJuggle(s16 nJuggle);
+
+    void SetStateHitDefPresit(bool bHitDef);
+
+    void SetMoveHitPresit(bool bMoveHit);
+
+    void SetStateHitCounterPresit(bool bHitCounter);
+
+    void SetSprPriority(u8 nSprpriority);
+
+    void SetStateFaceP2(bool bFaceP2);
+
+    void SetVelSet(float x, float y);
+
+    void NewInst() { nCurrInst = 0; }
+
+    // state���ò���
+    void SetParam(ConParmName nParam);
+
+    void SetHDParam(CONTROLHITDEFParmName nParam);
+
+    void SetPersistent();
+
+    void SetIgnorehitpause();
+
+    void SetDefaultStatedef();
+
+    void Reset();
+
+    bool IsStateDefAviable(s32 nStateDefNum);
 
 private:
-	INSTRUCTION pInst[200];
-	PLSTATEDEF *lpStateDefList;
-	u16        nTotalStateDef;
-	u16        nTotalStateDefSize;
-	u16        nTotalState;
-	u16        nTotalStateSize;
-	u16        nCurrTrigger;
-	u16        nTriggerListSize;
-	u16 nCurrInst;
-	u16 nCurrParamInst;
-	u16 nCurrParam;
-	
-	bool bParam;
+    INSTRUCTION pInst[200];
+    PLSTATEDEF *lpStateDefList;
+    u16 nTotalStateDef;
+    u16 nTotalStateDefSize;
+    u16 nTotalState;
+    u16 nTotalStateSize;
+    u16 nCurrTrigger;
+    u16 nTriggerListSize;
+    u16 nCurrInst;
+    u16 nCurrParamInst;
+    u16 nCurrParam;
 
-
-
+    bool bParam;
 };
 
 #endif

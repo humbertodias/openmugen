@@ -25,21 +25,22 @@
 
 #define STACKSIZE 100
 
-class CStack
-{
-//Constructor & Destructor
+class CStack {
+    //Constructor & Destructor
 public:
     CStack();
+
     ~CStack();
-    
+
     void ResetStack();
-    void Push(float nValue,char *strValue);
+
+    void Push(float nValue, char *strValue);
+
     Stacktype Pop();
 
 public:
     int nPos;
     Stacktype m_Stack[STACKSIZE];
-
 };
 
 #endif

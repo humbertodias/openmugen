@@ -23,30 +23,22 @@
 #include "Input.h"
 
 //Constructor
-CInput::CInput()
-{
-
+CInput::CInput() {
 }
+
 //Destructor
-CInput::~CInput()
-{
-
+CInput::~CInput() {
 }
+
 //Process InputData
-void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard)
-{
-    // Uint8 *keystate = SDL_GetKeyState(NULL);
+void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard) {
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 
-    
     //Process keyboard input
-    if( lpKeyBoard->bKeyBoard )
-    {
-        for( int k = 0; k < KEY_COUNT; k++ )
-        {
-            SDL_Scancode scancode = SDL_GetScancodeFromKey(lpKeyBoard->keyInfo[ k ].sdlKeycode);
-            lpKeyBoard->keyInfo[ k ].isPressed = keystate[ scancode ];
+    if (lpKeyBoard->bKeyBoard) {
+        for (int k = 0; k < KEY_COUNT; k++) {
+            SDL_Scancode scancode = SDL_GetScancodeFromKey(lpKeyBoard->keyInfo[k].sdlKeycode);
+            lpKeyBoard->keyInfo[k].isPressed = keystate[scancode];
         }
     }
-
 }

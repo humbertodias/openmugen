@@ -23,49 +23,38 @@
 
 #include "global.h"
 
-CStack::CStack()
-{   
-    nPos=0;
-    memset(m_Stack,0,sizeof(m_Stack));
-
+CStack::CStack() {
+    nPos = 0;
+    memset(m_Stack, 0, sizeof(m_Stack));
 }
 
 
-CStack::~CStack()
-{
-
+CStack::~CStack() {
 }
 
-void CStack::ResetStack()
-{
-    nPos=0;
-    memset(m_Stack,0,sizeof(m_Stack));
-
+void CStack::ResetStack() {
+    nPos = 0;
+    memset(m_Stack, 0, sizeof(m_Stack));
 }
 
-void CStack::Push(float nValue,char* strValue)
-{
-    if(nPos>STACKSIZE)
+void CStack::Push(float nValue, char *strValue) {
+    if (nPos > STACKSIZE)
         PrintMessage("CStack::Push Stack overflow");
-      
-      if(strValue!=NULL)
-        strcpy(m_Stack[nPos].string,strValue);
-      
-      m_Stack[nPos].Value=nValue;
-       
+
+    if (strValue != NULL)
+        strcpy(m_Stack[nPos].string, strValue);
+
+    m_Stack[nPos].Value = nValue;
+
 #ifdef DEBUG
     PrintMessage("Push %f",nValue);
-#endif       
-    nPos++;      
-  
+#endif
+    nPos++;
 }
 
-Stacktype CStack::Pop()
-{
-    if(nPos<0)
+Stacktype CStack::Pop() {
+    if (nPos < 0)
         PrintMessage("CStack::Pop Stack underflow");
-    
+
     return m_Stack[--nPos];
-
-
 }

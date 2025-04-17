@@ -49,11 +49,10 @@ void RunOneFrame()
 #endif
 
 char globalStr[1024];
-int main(int argc, char **argv)
-{
-    try
-    {
-     mugen.InitGame();
+
+int main(int argc, char **argv) {
+    try {
+        mugen.InitGame();
 
 #ifdef __EMSCRIPTEN__
         emscripten_set_main_loop(RunOneFrame, 0, 1);
@@ -61,13 +60,11 @@ int main(int argc, char **argv)
         mugen.RunGame();
         mugen.Quit();
 #endif
-     mugen.Quit();
+        mugen.Quit();
+    } catch (CError &e) {
+        mugen.Quit();
+        //windows only , change this for other OS
     }
-    catch(CError &e)
-    {
-      mugen.Quit();          
-      //windows only , change this for other OS 
-    }
- 
-   return 0;
+
+    return 0;
 }
