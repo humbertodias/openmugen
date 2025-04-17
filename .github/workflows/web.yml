@@ -39,8 +39,10 @@ jobs:
         run: |
           source ./emsdk/emsdk_env.sh
           make clean build-wasm
+          mkdir web
+          mv build/index.* web
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build
+          folder: web
