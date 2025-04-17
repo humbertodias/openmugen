@@ -11,7 +11,7 @@ The goal is to provide a simple, extensible, and cross-platform foundation for c
 
 
 ![OpenMugen Gameplay](https://github.com/user-attachments/assets/e7a9a194-2dde-4d4f-b41a-24b9154fe2fb)
-
+[Play](https://humbertodias.github.io/sdl-openmugen/)
 
 ## 🕹 Controls
 
