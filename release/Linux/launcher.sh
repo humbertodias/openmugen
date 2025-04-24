@@ -4,7 +4,7 @@
 script_dir="$(cd "$(dirname "$0")" && pwd)"
 echo "script_dir: $script_dir"
 
-latest_tag=$(curl -s https://api.github.com/repos/humbertodias/sdl-openmugen/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+latest_tag=$(curl -s https://api.github.com/repos/humbertodias/sdl-openmugen/releases/latest | grep '"tag_name":' | sed -E 's/.*"tag_name": "(.*)".*/\1/')
 echo "Latest tag: $latest_tag"
 
 # Download and extract data.zip if the resource directory doesn't exist
