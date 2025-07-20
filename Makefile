@@ -33,12 +33,13 @@ run-wasm:
 clean:
 	rm -rf build *.tar.gz data.zip log.txt
 
-copy-release-files:
+prepare-release-files:
+	echo "OpenMugen $(TAG_NAME)\n\nExecute:\n./run-$(OS).*" > build/README.txt	
 	cp -r run-$(OS).* build/
 
-targz/openmugen: copy-release-files
+targz/openmugen: prepare-release-files
 	cd build && \
-	tar -czvf "../OpenMugen-$(OS)-$(ARCH)-$(TAG_NAME).tar.gz" OpenMugen run-*.*
+	tar -czvf "../OpenMugen-$(OS)-$(ARCH).tar.gz" OpenMugen README.txt run-*.*
 
 targz/data:
 	zip -9 -r data.zip data
