@@ -77,7 +77,7 @@ else()
     if(APPLE)
         find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
         find_library(APPKIT_FRAMEWORK AppKit)
-        target_link_libraries(${PROJECT} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDL2)
+        target_link_libraries(${PROJECT_NAME} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDL2)
     endif()
 
 endif()
