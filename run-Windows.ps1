@@ -2,14 +2,14 @@
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Write-Host "script_dir: $scriptDir"
 
-$latestReleaseUrl = "https://api.github.com/repos/humbertodias/sdl-openmugen/releases/latest"
+$latestReleaseUrl = "https://api.github.com/repos/humbertodias/openmugen/releases/latest"
 $latestTag = (Invoke-RestMethod -Uri $latestReleaseUrl).tag_name
 Write-Host "Latest tag: $latestTag"
 
 # Download and extract data.zip if the data directory doesn't exist
 if (-not (Test-Path "$scriptDir\data")) {
     Write-Host "Downloading data.zip from release $latestTag..."
-    $downloadUrl = "https://github.com/humbertodias/sdl-openmugen/releases/download/$latestTag/data.zip"
+    $downloadUrl = "https://github.com/humbertodias/openmugen/releases/download/$latestTag/data.zip"
     Invoke-WebRequest -Uri $downloadUrl -OutFile "$scriptDir\data.zip"
     
     # Unzip the file into the script's directory

@@ -19,8 +19,8 @@ build:
 	$(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 	$(CMAKE) --build build -- -j
 
-build-wasm:
-	emcmake $(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=Release -DSDL2_ENABLE_WASM=ON
+build-wasm:	clean
+	emcmake $(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 	cp -r data build
 	$(CMAKE) --build build
 
@@ -34,11 +34,11 @@ clean:
 	rm -rf build *.tar.gz data.zip log.txt
 
 copy-release-files:
-	cp -r release/$(OS)/* build/
+	cp -r run-$(OS).* build/
 
 targz/openmugen: copy-release-files
 	cd build && \
-	tar -czvf "../OpenMugen-$(TAG_NAME)-$(OS)-$(ARCH).tar.gz" OpenMugen launcher.*
+	tar -czvf "../OpenMugen-$(OS)-$(ARCH)-$(TAG_NAME).tar.gz" OpenMugen run-*.*
 
 targz/data:
 	zip -9 -r data.zip data

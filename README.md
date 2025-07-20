@@ -1,7 +1,7 @@
 
-[![CI](https://github.com/humbertodias/sdl-openmugen/actions/workflows/ci.yml/badge.svg)](https://github.com/humbertodias/sdl-openmugen/actions/workflows/ci.yml)
-[![CD](https://github.com/humbertodias/sdl-openmugen/actions/workflows/cd.yml/badge.svg)](https://github.com/humbertodias/sdl-openmugen/actions/workflows/cd.yml)
-![GitHub all downloads](https://img.shields.io/github/downloads/humbertodias/sdl-openmugen/total)
+[![CI](https://github.com/humbertodias/openmugen/actions/workflows/ci.yml/badge.svg)](https://github.com/humbertodias/openmugen/actions/workflows/ci.yml)
+[![CD](https://github.com/humbertodias/openmugen/actions/workflows/cd.yml/badge.svg)](https://github.com/humbertodias/openmugen/actions/workflows/cd.yml)
+![GitHub all downloads](https://img.shields.io/github/downloads/humbertodias/openmugen/total)
 
 
 # 🥋 OpenMugen
@@ -10,7 +10,7 @@
 Its main goal is to offer a **simple**, **extensible**, and **cross-platform** foundation for creating customizable fighting games.
 
 
-[**Play**](https://humbertodias.github.io/sdl-openmugen/) directly in your browser 
+[**Play**](https://humbertodias.github.io/openmugen/) directly in your browser 
 
 
 ## 🎮 Controls
