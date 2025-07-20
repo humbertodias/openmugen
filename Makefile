@@ -3,6 +3,7 @@ OS    := $(shell uname -s)
 ARCH  := $(shell uname -m)
 CMAKE := $(shell command -v cmake)
 PWD   := $(shell pwd)
+EXE   := OpenMugen
 
 # Git versioning
 TAG_NAME := $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
@@ -25,21 +26,21 @@ build-wasm:	clean
 	$(CMAKE) --build build
 
 run:
-	./build/OpenMugen
+	./build/$(EXE)
 
 run-wasm:
 	python -m http.server -d build
 
 clean:
-	rm -rf build *.tar.gz data.zip log.txt
+	rm -rf build *.tar.gz data.zip log.txt $(EXE)
 
-prepare-release-files:
+release-files:
 	echo "OpenMugen $(TAG_NAME)\n\nExecute:\n./run-$(OS).*" > build/README.txt	
 	cp -r run-$(OS).* build/
 
-targz/openmugen: prepare-release-files
+targz/openmugen: release-files
 	cd build && \
-	tar -czvf "../OpenMugen-$(OS)-$(ARCH).tar.gz" OpenMugen README.txt run-*.*
+	tar -czvf "../$(EXE)-$(OS)-$(ARCH).tar.gz" $(EXE) README.txt run-*.*
 
 targz/data:
 	zip -9 -r data.zip data
@@ -49,7 +50,8 @@ ci:
 	docker run --rm -v "$(PWD)":/app -w /app openmugen sh -c "make clean build"
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/OpenMugen
+	ulimit -n 4096
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/$(EXE)
 
 format:
 	find src -name "*.cpp" -o -name "*.h" | xargs clang-format -i
