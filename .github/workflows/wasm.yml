@@ -1,4 +1,4 @@
-name: WEB
+name: wasm
 
 on:
   push:
@@ -39,10 +39,10 @@ jobs:
         run: |
           source ./emsdk/emsdk_env.sh
           make build/wasm
-          mkdir web
-          mv build/index.* web
+          mkdir wasm
+          mv build/index.* wasm
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: web
+          folder: wasm
