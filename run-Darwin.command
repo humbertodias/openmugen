@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 script_dir="$(cd "$(dirname "$0")" && pwd)"
 echo "script_dir: $script_dir"
 
@@ -19,8 +21,9 @@ executable="$script_dir/OpenMugen"
 if [ ! -f "$executable" ]; then
     echo "OpenMugen executable not found, downloading latest release..."
 
-    echo "Downloading $asset_url ..."
-    curl -L "https://github.com/humbertodias/openmugen/releases/download/$latest_tag/OpenMugen-$os-$arch.tar.gz" -o "$script_dir/OpenMugen.tar.gz"
+    release_url="https://github.com/humbertodias/openmugen/releases/download/$latest_tag/OpenMugen-$os-$arch.tar.gz"
+    echo "Downloading $release_url ..."
+    curl -L "$release_url" -o "$script_dir/OpenMugen.tar.gz"
 
     echo "Extracting OpenMugen.tar.gz..."
     tar -xzf "$script_dir/OpenMugen.tar.gz" -C "$script_dir" OpenMugen
