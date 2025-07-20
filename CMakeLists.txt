@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-set(PROJECT OpenMugen)
-project(${PROJECT})
+project(OpenMugen)
 
 # Detect if building with Emscripten
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
@@ -11,9 +10,9 @@ endif()
 add_definitions("-Wall")
 file(GLOB_RECURSE SOURCE_FILES "src/*.cpp")
 
-add_executable(${PROJECT} ${SOURCE_FILES})
-set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 98)
-set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD_REQUIRED 98)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 98)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED 98)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
 
@@ -37,13 +36,23 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LE
     message(FATAL_ERROR "Require at least g++-5.1")
 endif()
 
+# target copy_data
+add_custom_target(copy_data
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/data"
+        "${CMAKE_BINARY_DIR}/data"
+        COMMENT "Copying data directory to build folder"
+)
+# always copy data folder
+add_dependencies(${PROJECT_NAME} copy_data)
+
 if(EMSCRIPTEN)
 
     # SDL2 is built-in with Emscripten: -sUSE_SDL=2
     set(CMAKE_EXECUTABLE_SUFFIX ".js")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sSDL2_IMAGE_FORMATS='[\"png\",\"bmp\"]' -sFULL_ES3=1 -sASYNCIFY -sINITIAL_MEMORY=134217728 -sMAXIMUM_MEMORY=268435456 -sALLOW_MEMORY_GROWTH=1 --preload-file data")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sSDL2_IMAGE_FORMATS='[\"png\",\"bmp\"]' -sFULL_ES3=1 -sASYNCIFY -sALLOW_MEMORY_GROWTH=1 --preload-file data")
     # Define explicit output for the HTML file
-    set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "index")
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "index")
 
 # Dependencies (only for native builds)
 else()
@@ -55,7 +64,7 @@ else()
     include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_GFX_INCLUDE_DIRS})
     link_directories(${SDL2_LIBRARY_DIRS} ${SDL2_IMAGE_LIBRARY_DIRS} ${SDL2_GFX_LIBRARY_DIRS})
 
-    target_link_libraries(${PROJECT}
+    target_link_libraries(${PROJECT_NAME}
         -L${SDL2_LIBRARY_DIRS}
         -L${SDL2_IMAGE_LIBRARY_DIRS}
         -L${SDL2_GFX_LIBRARY_DIRS}
@@ -70,4 +79,5 @@ else()
         find_library(APPKIT_FRAMEWORK AppKit)
         target_link_libraries(${PROJECT} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDL2)
     endif()
+
 endif()

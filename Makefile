@@ -23,7 +23,6 @@ build:
 build/wasm:	clean
 	emcmake $(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 	cp wasm.index.html build/index.html
-	cp -r data build
 	$(CMAKE) --build build
 
 run:
@@ -33,7 +32,7 @@ run/wasm:
 	python -m http.server -d build
 
 clean:
-	rm -rf build *.tar.gz data.zip log.txt $(EXE)
+	rm -rf build *.tar.gz data.zip log.txt $(EXE) cmake-build-*
 
 release-files:
 	echo "OpenMugen $(TAG_NAME)\n\nExecute:\n./run-$(OS).*" > build/README.txt	
