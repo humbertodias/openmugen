@@ -59,7 +59,7 @@ Then run:
 ## 🤝 Contributing
 
 Pull requests are welcome!  
-If you find a bug or have a feature suggestion, feel free to [open an issue](https://github.com/humbertodias/sdl-openmugen/issues).
+If you find a bug or have a feature suggestion, feel free to [open an issue](https://github.com/humbertodias/openmugen/issues).
 
 
 ## 📄 License
