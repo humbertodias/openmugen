@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+# required for upload
+permissions:
+  contents: write
+
 jobs:
   ci:
     runs-on: ubuntu-latest
