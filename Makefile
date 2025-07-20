@@ -47,7 +47,23 @@ targz/data:
 
 ci:
 	docker build -t openmugen .
-	docker run --rm -v "$(PWD)":/app -w /app openmugen sh -c "make clean build"
+	docker run --rm -v "$(PWD)":/app -w /app openmugen sh -c "make clean build validate-log"
+
+validate-log:
+	Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+	export DISPLAY=:99
+	./build/$(EXE) &
+	sleep 3
+	@if grep -q 'VideoSystem Init OK' log.txt; then \
+		echo "✅ $(EXE) ran successfully"; \
+	else \
+		echo "❌ $(EXE) did not produce expected output"; \
+		echo "----- log.txt -----"; \
+		cat log.txt; \
+		exit 1; \
+	fi
+	pkill -9 $(EXE)
+	pkill -9 Xvfb
 
 valgrind:
 	ulimit -n 4096
