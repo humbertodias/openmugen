@@ -38,7 +38,7 @@ jobs:
       - name: Build WebAssembly
         run: |
           source ./emsdk/emsdk_env.sh
-          make clean build-wasm
+          make build/wasm
           mkdir web
           mv build/index.* web
 

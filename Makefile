@@ -20,15 +20,16 @@ build:
 	$(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 	$(CMAKE) --build build -- -j
 
-build-wasm:	clean
+build/wasm:	clean
 	emcmake $(CMAKE) -Bbuild -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
+	cp wasm.index.html build/index.html
 	cp -r data build
 	$(CMAKE) --build build
 
 run:
 	./build/$(EXE)
 
-run-wasm:
+run/wasm:
 	python -m http.server -d build
 
 clean:
