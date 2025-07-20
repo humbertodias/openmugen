@@ -43,9 +43,7 @@ if(EMSCRIPTEN)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sSDL2_IMAGE_FORMATS='[\"png\",\"bmp\"]' -sFULL_ES3=1 -sASYNCIFY -sINITIAL_MEMORY=134217728 -sMAXIMUM_MEMORY=268435456 -sALLOW_MEMORY_GROWTH=1 --preload-file data")
     # Define explicit output for the HTML file
-    set_target_properties(OpenMugen PROPERTIES
-    OUTPUT_NAME "index"
-    )
+    set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "index")
 
 # Dependencies (only for native builds)
 else()
