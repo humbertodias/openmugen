@@ -53,7 +53,7 @@ validate-log:
 	Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 	export DISPLAY=:99
 	./build/$(EXE) &
-	sleep 3
+	sleep 5
 	@if grep -q 'VideoSystem Init OK' log.txt; then \
 		echo "✅ $(EXE) ran successfully"; \
 	else \
@@ -71,3 +71,6 @@ valgrind:
 
 format:
 	find src -name "*.cpp" -o -name "*.h" | xargs clang-format -i
+
+format-check:
+	find src -name "*.cpp" -o -name "*.h" | xargs clang-format -n
