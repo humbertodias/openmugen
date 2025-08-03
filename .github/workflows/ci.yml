@@ -16,5 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run format check
+        run: make format-check
+              
       - name: Continuous Integration
         run: make ci
