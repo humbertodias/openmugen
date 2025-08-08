@@ -49,11 +49,11 @@ Then run:
 
 ## 🚧 Roadmap
 
-- [ ] Full Player 2 support  
+- [ ] Fully implement player movement - https://github.com/humbertodias/openmugen/issues/2
+- [ ] Enhanced collision and hitbox system - https://github.com/humbertodias/openmugen/issues/3
+- [ ] Add sound and music engine - https://github.com/humbertodias/openmugen/issues/4
 - [ ] Custom animations and character scripting  
-- [ ] Enhanced collision and hitbox system  
-- [ ] Basic AI opponent  
-- [ ] Sound and music engine
+- [ ] Basic AI opponent
 
 
 ## 🤝 Contributing
